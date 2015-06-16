@@ -1,7 +1,5 @@
-#I am not using the parameter k but I don't think it's necessary. 
-
 import numpy as np
-from sklearn import cluster
+#from sklearn import cluster
 
 
 def initialize(X, K):
