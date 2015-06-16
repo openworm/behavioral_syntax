@@ -12,6 +12,7 @@ import numpy as np
 def vectorCor(mat1,mat2):
     N = np.shape(mat1)[0]
     M = np.shape(mat2)[0]
+    Rmat = [[0 for i in range(N)] for j in range(M)]
     for i in range(N):
         for j in range(N):
             Rmat[i][j] = np.corrcoef(mat1[i],mat2[j])
