@@ -1,76 +1,72 @@
-# Example of kNN implemented from Scratch in Python
- 
-import csv
-import random
-import math
-import operator
- 
-def loadDataset(filename, split, trainingSet=[] , testSet=[]):
-	with open(filename, 'rb') as csvfile:
-	    lines = csv.reader(csvfile)
-	    dataset = list(lines)
-	    for x in range(len(dataset)-1):
-	        for y in range(4):
-	            dataset[x][y] = float(dataset[x][y])
-	        if random.random() < split:
-	            trainingSet.append(dataset[x])
-	        else:
-	            testSet.append(dataset[x])
- 
- 
-def euclideanDistance(instance1, instance2, length):
-	distance = 0
-	for x in range(length):
-		distance += pow((instance1[x] - instance2[x]), 2)
-	return math.sqrt(distance)
- 
-def getNeighbors(trainingSet, testInstance, k):
-	distances = []
-	length = len(testInstance)-1
-	for x in range(len(trainingSet)):
-		dist = euclideanDistance(testInstance, trainingSet[x], length)
-		distances.append((trainingSet[x], dist))
-	distances.sort(key=operator.itemgetter(1))
-	neighbors = []
-	for x in range(k):
-		neighbors.append(distances[x][0])
-	return neighbors
- 
-def getResponse(neighbors):
-	classVotes = {}
-	for x in range(len(neighbors)):
-		response = neighbors[x][-1]
-		if response in classVotes:
-			classVotes[response] += 1
-		else:
-			classVotes[response] = 1
-	sortedVotes = sorted(classVotes.iteritems(), key=operator.itemgetter(1), reverse=True)
-	return sortedVotes[0][0]
- 
-def getAccuracy(testSet, predictions):
-	correct = 0
-	for x in range(len(testSet)):
-		if testSet[x][-1] == predictions[x]:
-			correct += 1
-	return (correct/float(len(testSet))) * 100.0
-	
-def main():
-	# prepare data
-	trainingSet=[]
-	testSet=[]
-	split = 0.67
-	loadDataset('iris.data', split, trainingSet, testSet)
-	print 'Train set: ' + repr(len(trainingSet))
-	print 'Test set: ' + repr(len(testSet))
-	# generate predictions
-	predictions=[]
-	k = 3
-	for x in range(len(testSet)):
-		neighbors = getNeighbors(trainingSet, testSet[x], k)
-		result = getResponse(neighbors)
-		predictions.append(result)
-		print('> predicted=' + repr(result) + ', actual=' + repr(testSet[x][-1]))
-	accuracy = getAccuracy(testSet, predictions)
-	print('Accuracy: ' + repr(accuracy) + '%')
-	
-main()
+@author: aidanrocke
+"""
+import numpy as np
+
+#inputs are either nxd numpy arrays in a d-dimensional space or integers for the 
+#value of K.
+
+#outputs are nxK lists
+
+def knnsearch(*args):
+    X = args
+    n_args = len(args)
+    
+#the shape of the argument matters as well.
+    
+    if n_args == 1:
+        neighbors = list(np.zeros(len(X)))
+        for i in range(len(X)):
+            distances = [np.inf]*len(X)
+            members = list(set(range(len(X)))-set([i]))
+            for j in members:
+                distances[j] = np.linalg.norm(X[i,:]-X[j,:])
+            #find the smallest value
+            val = min(distances)
+            neighbors[i] = distances.index(val)
+        
+    elif n_args == 2 and len(np.shape(X[2])) == 0:
+        K = X[2]
+        X = X[1]
+        x1 = np.shape(X)[0]
+        neighbors = [[0] * K for i in range(x1)]
+        for i in range(len(X)):
+            distances = [np.inf]*len(X)
+            members = list(set(range(len(X)))-set([i]))
+            for j in members:
+                distances[j] = np.linalg.norm(X[i,:]-X[j,:])
+            #find the K smallest values
+            val = np.sort(distances)
+            for k in range(K):
+                neighbors[i][k] = distances.index(val[k])
+                
+    elif n_args == 2 and len(np.shape(X[2])) == 2:
+        #when K is not given, K==1
+        Q = X[1]
+        R = X[2]
+        neighbors = list(np.zeros(len(Q)))
+        for i in range(len(Q)):
+            distances = [np.inf]*len(Q)
+            members = list(range(len(Q)))
+            for j in range(len(R)):
+                distances[j] = np.linalg.norm(Q[i,:]-R[j,:])
+                
+            #find the smallest value
+            val = min(distances)
+            neighbors[i] = distances.index(val)
+            
+    elif n_args == 3 and len(np.shape(X[2])) == 2:
+        Q = X[1]
+        R = X[2]
+        K = X[3]
+        x1 = np.shape(Q)[0]
+        neighbors = [[0] * K for i in range(x1)]
+        for i in range(len(Q)):
+            distances = [np.inf]*len(Q)
+            members = list(set(range(len(Q)))-set([i]))
+            for j in range(len(R)):
+                distances[j] = np.linalg.norm(Q[i,:]-R[j,:])
+            #find the K smallest values
+            val = np.sort(distances)
+            for k in range(K):
+                neighbors[i][k] = distances.index(val[k])
+
