@@ -1,15 +1,9 @@
-import scipy.io as sio
+#import scipy.io as sio
+#import numpy as np
 
-'using the idea described here: http://www.codedisqus.com/0NzVejPWWq/creating-matlab-cell-arrays-in-python.html'
-
-#matrix is assumed to be a multi-dimensional matlab array
-#example input: matrix = sio.loadmat('matrix.mat')
-
-#instead of converting to a Matlab cell array I have decided to convert to a Python list
-#as Python lists can hold any object.
+#I assume that I will get a numpy array rather than a matlab matrix
+#as Python lists can hold any object, just like cell arrays
 
 def mat2rowcell(matrix):
-  matrix = np.array(matrix)
-  N = length(matrix)
   list = matrix.tolist()
   return list
