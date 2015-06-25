@@ -1,5 +1,10 @@
 This is the Python 3 implementation of Andre Brown's behavioral syntax code: https://github.com/aexbrown/Behavioural_Syntax
 
+I have three grades that I will give to the code:
+a) 50%: started but unfinished
+b) 80%: mostly finished
+c) 100%: runs as expected and is easy to read
+
 Presently, I don't have access to a python interpreter so I can't have this code run. The only thing I can guarantee is that it's syntactically correct. 
 
 These Python programs are for discretizing worm behaviour using a series of template postures and then using the posture sequences to discover interesting patterns of behaviour and for comparing worm strains to each other.  Details can be found in the following manuscript (please cite it if you use any of this code for a publication):
