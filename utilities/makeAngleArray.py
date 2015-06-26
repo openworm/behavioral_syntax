@@ -23,7 +23,7 @@ def makeAngleArray(x, y):
     
     
     
-    [numFrames, lengthX] = np.shape(x);
+    [numFrames, lengthX] = np.shape(x)
     
     # initialize arrays
     angleArray = np.zeros([numFrames, lengthX-1])
