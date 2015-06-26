@@ -30,7 +30,7 @@ def makeAngleArray(x, y):
     meanAngles = np.zeros([numFrames,1])
     
     
-    for i in range(numFrames)
+    for i in range(numFrames):
         
         # calculate the x and y differences
         dX = np.diff(x[i], n=1, axis=0)
@@ -53,12 +53,12 @@ def makeAngleArray(x, y):
         negativeJumps = np.array((np.diff(angles, n=1, axis=0) < -math.pi)) + 1
         
         # subtract 2pi from remainging data after positive jumps
-        for j in range(positiveJumps)
-            angles(positiveJumps(j):end) = angles(positiveJumps(j):end) - 2*math.pi
+        for j in range(positiveJumps):
+            angles[positiveJumps[j]:] = angles[positiveJumps[j]:] - 2*math.pi
         
         # add 2pi to remaining data after negative jumps
-        for j = 1:length(negativeJumps)
-            angles[negativeJumps[j]:end] = angles[negativeJumps[j]:end] + 2*math.pi
+        for j in range(negativeJumps):
+            angles[negativeJumps[j]:] = angles[negativeJumps[j]:] + 2*math.pi
         
         # rotate skeleton angles so that mean orientation is zero
         meanAngle = np.mean(angles)
