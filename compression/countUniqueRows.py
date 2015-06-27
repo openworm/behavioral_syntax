@@ -21,7 +21,7 @@
 
 from np import unique, array, all
 
-def myunique(input):
+def countUniqueRows(input):
   unique_rows = array([array(x) for x in set(tuple(x) for x in input)])
   counts = array([len(input[all(input==x, axis=1)]) for x in unique_rows],dtype=int)
   return unique_rows, counts
