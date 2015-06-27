@@ -3,12 +3,10 @@ import numpy as np
 def n_gramsNumerical(dataVec, n):
 # Input
 #   dataVec - a numpy array to be compressed
-#   n       - the n in n-grams (also the number of columns in output
-#             nGrams)
+#   n       - the n in n-grams (also the number of columns in output nGrams)
 #
 # Output
-#   nGrams  - a len(dataVec)-(n+1) by n array containing all the
-#             n-grams in dataVec    
+#   nGrams  - a len(dataVec)-(n+1) by n array containing all the n-grams in dataVec    
 
     # check inputs
     if len(np.shape(dataVec)) > 1:
