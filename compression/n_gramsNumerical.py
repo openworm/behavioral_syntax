@@ -41,17 +41,11 @@ def n_gramsNumerical(dataVec, n):
 
                 break
             
-        elif (n != 1) and (n <= 10):
-            nGrams = dataVec
-            for i in range(n):
-                row = np.concatenate([dataVec[i+1:],np.array([np.NaN]*(i+1))])
-                nGrams = np.concatenate([[nGrams],[row]])
+            elif (n != 1) and (n <= 10):
+                nGrams = dataVec
+                for i in range(n):
+                    row = np.hstack((dataVec[i+1:],np.array([np.NaN]*(i+1))))
+                    nGrams = np.vstack((nGrams],row))
                 
-                break
-            if case(6):
-                print(10)
-                break
-            if case(7):
-                print(11)
-            if case(8): # default, could also just omit condition or 'if True'
-                print("something else!")
+                    break
+            else:
