@@ -94,3 +94,5 @@ def compressTarget(dataVec, grammar):
             
             #remove nan values:
             compVec = compVec[~np.isnan(compVec)]
+            
+    return matchN, compVec
