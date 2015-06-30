@@ -126,7 +126,9 @@ def compressTargetApprox(dataVec, grammar, distTable, thresh):
         
         # make the replacements in compVec
         for j in range(len(inds)):
-            compVec(inds(jj):inds(jj) + numel(sequence) - 1) = ...
-                [grammar{bestInd, 1} NaN(1, numel(sequence) - 1)];
-        end
-        compVec(isnan(compVec)) = [];
+            compVec[inds[j]:inds[j] + len(sequence)] = np.hstack([np.array(grammar[bestInd][0]), [np.nan]*(len(sequence) - 1)])
+        
+        #remove nan values:
+        compVec = compVec[~np.isnan(compVec)]
+        
+    return matchN, meanDist, stdDist, compVec
