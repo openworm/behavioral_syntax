@@ -82,17 +82,18 @@ def compressTarget(dataVec, grammar):
             inds = [m.start() for m in re.finditer(sequence, compVec)]
             
             # remove the overlaps
+        
             while np.any(np.diff(inds, n=1, axis=0) < len(sequence)):
-                # find the first overlap
-                overlapInd1 = np.nonzero(np.diff(inds, n=1, axis=0) < len(sequence))[0][0] + 1
-                np.delete(inds,overlapInd1)
-
-            
-            # make the replacements in compVec
-            for j in range(len(inds)):
-                compVec[inds[j]:inds[j] + len(sequence)] = np.hstack([np.array(grammar[bestInd][0]), [np.nan]*3])
-            
-            #remove nan values:
-            compVec = compVec[~np.isnan(compVec)]
+                        # find the first overlap
+                        overlapInd1 = np.nonzero(np.diff(inds, n=1, axis=0) < len(sequence))[0][0] + 1
+                        np.delete(inds,overlapInd1)
+        
+                    
+                    # make the replacements in compVec
+                    for j in range(len(inds)):
+                        compVec[inds[j]:inds[j] + len(sequence)] = np.hstack([np.array(grammar[bestInd][0]), [np.nan]*(len(sequence) - 1)])
+                
+                    #remove nan values:
+                    compVec = compVec[~np.isnan(compVec)]
             
     return matchN, compVec
