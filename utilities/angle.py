@@ -39,11 +39,11 @@ def angle(x, y):
         negativeJumps = np.array((np.diff(angles, n=1, axis=0) < -5)) + 1
         
         # subtract 2pi from remainging data after positive jumps
-        for j in range(positiveJumps):
+        for j in range(len(positiveJumps)):
             angles[positiveJumps[j]:] = angles[positiveJumps[j]:] - 2*math.pi
         
         # add 2pi to remaining data after negative jumps
-        for j in range(negativeJumps):
+        for j in range(len(negativeJumps)):
             angles[negativeJumps[j]:] = angles[negativeJumps[j]:] + 2*math.pi
         
         # rotate skeleton angles so that mean orientation is zero
