@@ -158,7 +158,7 @@ def fdr_bh(*args):
         report='no'
     
     s=np.shape(pvals)
-    if (len(s)>2) || s[0]>1):
+    if (len(s)>2) or (s[0]>1):
         [p_sorted, sort_ids]= sort(pvals.reshape(1,np.product(s)))
     else
         #p-values are already a row vector
