@@ -10,7 +10,7 @@ def n_gramsNumerical(dataVec, n):
 
     # check inputs
     if len(np.shape(dataVec)) > 1:
-        print('dataVec must be a row vector')
+        raise Exception('dataVec must be a row vector')
         
     else:
         if n == 1:
