@@ -135,8 +135,8 @@ def fdr_bh(*args):
     N = len(args)
     
     if N<1:
-        print('You need to provide a vector or matrix of p-values.')
-    else
+        raise Exception('You need to provide a vector or matrix of p-values.')
+    else:
         if sum(pvals<0) > 0 :
             raise Exception('Some p-values are less than 0.')
         elif sum(pvals>1):
