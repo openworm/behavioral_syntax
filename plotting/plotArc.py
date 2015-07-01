@@ -64,4 +64,4 @@ def plotArc(X, color, sampRate, plotMode):
     #     patch([arcX NaN], [arcY NaN], color(1:3), ...
     #         'FaceAlpha', color(4), 'LineStyle', 'none')
     else
-        print('plotMode must be either patch or line')
+        raise Exception('plotMode must be either patch or line')
