@@ -9,7 +9,9 @@ The following have been very useful resources:
 1) http://mathesaurus.sourceforge.net/matlab-numpy.html
 2) http://www.cert.org/flocon/2011/matlab-python-xref.pdf
 
-I now have access to a Python interpreter as I managed to borrow a laptop from the university. (My laptop's screen broke)
+In order to read the v7.3 matlab data you need to use h5py:
+1) http://stackoverflow.com/questions/29852481/reading-all-variables-in-a-mat-file-with-python-h5py
+2) http://stackoverflow.com/questions/21480419/how-to-read-matlab-array-in-python-using-h5py
 
 These Python programs are for discretizing worm behaviour using a series of template postures and then using the posture sequences to discover interesting patterns of behaviour and for comparing worm strains to each other.  Details can be found in the following manuscript (please cite it if you use any of this code for a publication):
 
