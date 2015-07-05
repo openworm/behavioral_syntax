@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import pandas as pd
 
 def angle(x, y):
 
@@ -52,6 +53,11 @@ def angle(x, y):
         angles -= meanAngle
         
         # append to angle array
-        angleArray[i] = angles
         
+        angleArray[i] = pd.Series(angles).interpolate().values
+        
+        
+    #interpolate over NaNs in meanAngles:
+    meanAngles = meanAngles.flatten()
+    meanAngles = pd.Series(meanAngles).interpolate().values
     return angleArray, meanAngles
