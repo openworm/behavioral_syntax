@@ -1,49 +1,48 @@
-function [skelX, skelY] = angle2skel(angleArray, meanAngle, arclength)
+def angle2skel(angleArray, meanAngle, arclength):
 
-% ANGLE2SKEL Take in an angle array and integrate over the angles to get
-% back a skeleton for each frame.  NB: This reconstruction assumes each 
-% segment was equally spaced so that each reconstructed skeleton segment 
-% has length arclength/(numAngles + 1)
-% 
-% Input
-%   angleArray - a numSkelPoints - 1 by numFrames array of skeleton
-%                tangent angles that have been rotated to have a mean
-%                angle of zero.
-%   meanAngle  - a 1 by numFrames array of angles.  Each angle is the mean
-%                angle of the skeleton used to make the corresponding row
-%                of angles in angleArray.  Can be left as zeros if no
-%                rotation is desired.
-%   arclength  - the total arclength of the skeleton to be reconstructed.
-%                Can be set to 1 for a normalised skeleton.
-% 
-% Output
-%   skelX      - a numAngles + 1 by numFrames array of skeleton
-%                x-coordinates
-%   skelY      - a numAngles + 1 by numFrames array of skeleton
-%                y-coordinates
-% 
-% Copyright Medical Research Council 2013
-% André Brown, abrown@mrc-lmb.cam.ac.uk, aexbrown@gmail.com
-% Released under the terms of the GNU General Public License, see
-% readme.txt
+# ANGLE2SKEL Take in an angle array and integrate over the angles to get
+# back a skeleton for each frame.  NB: This reconstruction assumes each 
+# segment was equally spaced so that each reconstructed skeleton segment 
+# has length arclength/(numAngles + 1)
+# 
+# Input
+#   angleArray - a numSkelPoints - 1 by numFrames array of skeleton
+#                tangent angles that have been rotated to have a mean
+#                angle of zero.
+#   meanAngle  - a 1 by numFrames array of angles.  Each angle is the mean
+#                angle of the skeleton used to make the corresponding row
+#                of angles in angleArray.  Can be left as zeros if no
+#                rotation is desired.
+#   arclength  - the total arclength of the skeleton to be reconstructed.
+#                Can be set to 1 for a normalised skeleton.
+# 
+# Output
+#   skelX      - a numAngles + 1 by numFrames array of skeleton
+#                x-coordinates
+#   skelY      - a numAngles + 1 by numFrames array of skeleton
+#                y-coordinates
+# 
+# Copyright Medical Research Council 2013
+# André Brown, abrown@mrc-lmb.cam.ac.uk, aexbrown@gmail.com
+# Released under the terms of the GNU General Public License, see
+# readme.txt
 
-% get dimensions
-numAngles = size(angleArray, 1);
-numFrames = size(angleArray, 2);
-
-
-% initialisation
-skelX = NaN(numAngles + 1, numFrames);
-skelY = NaN(numAngles + 1, numFrames);
-
-for ii = 1:numFrames
-    % add up x-contributions of angleArray, rotated by meanAngle
-    skelX(:, ii) = [0; cumsum(cos( angleArray(:, ii) + meanAngle(ii) ) * ...
-        arclength/(numAngles + 1)) ];
+    # get dimensions
+    numFrames, numAngles  = np.shape(angleArray)
     
-    % add up y-contributions of angleArray, rotated by meanAngle
-    skelY(:, ii) = [0; cumsum(sin( angleArray(:, ii) + meanAngle(ii) ) * ...
-        arclength/(numAngles + 1)) ];
-end
-
-
+    
+    # initialisation
+    skelX = np.array([[np.NaN]*numAngles+1 for i in range(numFrames)])
+    skelY = np.array([[np.NaN]*numFrames for i in range(numAngles+1)])
+    
+    for i in range(numFrames):
+        # add up x-contributions of angleArray, rotated by meanAngle
+        skelX[i] = [0; np.cumsum(cos( angleArray[i] + meanAngle[i] ) * ...
+            arclength/(numAngles + 1)) ];
+        
+        # add up y-contributions of angleArray, rotated by meanAngle
+        skelY(:, ii) = [0; cumsum(sin( angleArray(:, ii) + meanAngle(ii) ) * ...
+            arclength/(numAngles + 1)) ];
+    end
+    
+    return skelX, skelY
