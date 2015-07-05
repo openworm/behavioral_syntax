@@ -1,6 +1,7 @@
 import angle, scipy, h5py
 
-f = h5py.File('C:/Users/ltopuser/behavioral_syntax/utilities/data.mat')
+#ex. filepath = 'C:/Users/ltopuser/behavioral_syntax/utilities/data.mat'
+f = h5py.File(filepath)
 
 #getting the right cell array:
 l1 = f.get('worm')
