@@ -25,6 +25,6 @@ def findApprox(traj, patternTraj, r2Thresh):
         
     
         if R2 >= r2Thresh and sign(R[0][1]) > 0:
-            matchInds(i) = 1
+            matchInds[i] = 1
     
     return matchInds
