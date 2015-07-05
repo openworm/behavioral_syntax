@@ -19,3 +19,8 @@ angleArray, meanAngles = angle(X,Y)
 #save data
 scipy.io.savemat('angleArray.mat', dict(x=angleArray))
 scipy.io.savemat('meanAngles.mat', dict(y=meanAngles))
+
+
+#loading data:
+#angles = sio.loadmat('C:/Users/ltopuser/behavioral_syntax/data/angles.mat')
+#array = angles.get('x')
