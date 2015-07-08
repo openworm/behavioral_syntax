@@ -1,12 +1,8 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jul  7 21:00:24 2015
-
-@author: ltopuser
-"""
-
 import os
 import scipy
+import random
+import kmeans
+import numpy as np
 
 # find a set of representative postures by loading angleArrays from a
 # directory and performing k-means clustering.
@@ -60,13 +56,13 @@ for i in range(fileNum):
             # load the angle array data
             file = directory + fileList[fileInd]
             angles_dict = scipy.io.loadmat(file)
-            angleArray = angles['x']
+            angleArray = angles_dict['x']
             
     else:
         fileInd = i
         file = directory + fileList[fileInd]
         angles_dict = scipy.io.loadmat(file)
-        angleArray = angles['x']
+        angleArray = angles_dict['x']
         
     # instead of dropping NaN values, interpolate over NaNs
     # initialise anglesNoNaN
@@ -78,31 +74,32 @@ for i in range(fileNum):
         true = np.isnan(pAmp)
         ix_t = np.where(true == True)
         ix_f = np.where(true == False)
-        f = interpolate.interp1d(~true, pAmp[ix_f])
+        f = scipy.interpolate.interp1d(~true, pAmp[ix_f])
         pAmp[ix_t] = f(ix_t)
         anglesNoNaN[j] = pAmp
     
     # since extrapolation was not used, there could still be some remaining
     # NaNs.  Remove these here.
-    nanRows = find(isnan(anglesNoNaN(:, 1)))
-    anglesNoNaN(nanRows, :) = []
+    nan_row_indices = np.isnan(anglesNoNaN)
+    nanRows = np.where(nan_row_indices == True)
+    anglesNoNaN[nanRows] = []
     
     # take a random subset of frames (could include repeats)
-    frameInds = randi(size(anglesNoNaN, 1), frameNum, 1);
-    anglesNoNaN = anglesNoNaN(frameInds, :);
+    frameInds = np.random.randint(0,y,size=frameNum)
+    anglesNoNaN = anglesNoNaN[frameInds]
     
     # if the worm is in the "left" folder, invert all the angles.
-    if ~isempty(strfind(fileList{fileInd}, '/L/'))
-        anglesNoNaN = anglesNoNaN * -1;
-    end
+    if fileList[fileInd].find('/L/') > 0:
+        anglesNoNaN = anglesNoNaN * -1
     
     # add the current angle array to the total
-    angleTotal = [angleTotal; anglesNoNaN];
-end
+    angleTotal = anglesNoNaN
 
 # do the clustering
-[~, postures] = kmeans(angleTotal', k);
+postures = kmeans(angleTotal, k)
+
+scipy.io.savemat('postures.mat', dict(x=postures))
 
 # save the representative postures in a mat file
-save([directory 'BENZALDEHYDE_postures_' num2str(k) '-centers_' num2str(fileNum) ...
-    '-files_' num2str(frameNum) '-framesPerFile.mat'], 'postures')
+#save([directory 'BENZALDEHYDE_postures_' num2str(k) '-centers_' num2str(fileNum) ...
+ #   '-files_' num2str(frameNum) '-framesPerFile.mat'], 'postures')
