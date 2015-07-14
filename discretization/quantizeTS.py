@@ -68,7 +68,7 @@ def quantizeTS(timeSeries, centers, warpNum, flickThresh):
                 stateSequence[flicks[j] + 1:flicks[j] + i] = np.matlib.repmat(stateSequence[flick[j]], ii, 1)
     
     # find places where the state changes
-    changeInds = [0; find(diff(stateSequence) ~= 0); len(stateSequence)] + 1
+    changeInds = [0; np.where(np.diff(stateSequence) ~= 0); len(stateSequence)] + 1
     
     # get the lengths of the constant segments
     constLengths = np.diff(changeInds)
@@ -101,7 +101,7 @@ def quantizeTS(timeSeries, centers, warpNum, flickThresh):
             # if the target length is greater than 1, then all lengths must be
             # warpNum, except possibly the last
             modulus = mod(constLengths(ii), warpNum);
-            if targetLengths(ii) > 1 && modulus == 0
+            if targetLengths[i] > 1 && modulus == 0
                 currentLengths = repmat(warpNum, targetLengths(ii), 1);
             else
                 currentLengths = ...
