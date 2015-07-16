@@ -1,28 +1,19 @@
-from angle import angle
+import numpy as np
 
-import scipy, h5py
+def angle(x, y):
 
-#ex. filepath = 'C:/Users/ltopuser/behavioral_syntax/utilities/data.mat'
+#given a series of x and y coordinates over time, calculates the angle
+#between each vector making up the skeleton and the x-axis.  The mean angle
+#is subtracted from each frame so that the average orientation is always
+#the same in the output angleArray.
 
-def loading_data(filepath):
-  f = h5py.File(filepath)
-  
-  #getting the right cell array:
-  l1 = f.get('worm')
-  
-  l2 = l1.get('posture')
-  
-  l3 = l2.get('skeleton')
-  
-  #getting the x and y coordinates:
-  X = l3.get('x')
-  
-  Y = l3.get('y')
-  
-  angleArray, meanAngles = angle(X,Y)
-  
-  #save data
-  scipy.io.savemat('angleArray.mat', dict(x=angleArray))
-  scipy.io.savemat('meanAngles.mat', dict(y=meanAngles))
-  
-  return angleArray, meanAngles
+
+
+
+    [numFrames, lengthX] = np.shape(x)
+    
+    # initialize arrays
+    angleArray = np.zeros([numFrames, lengthX-1])
+    meanAngles = np.zeros([numFrames,1])
+    
+    return angleArray, meanAngles
