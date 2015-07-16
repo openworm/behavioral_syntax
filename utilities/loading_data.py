@@ -1,4 +1,6 @@
-import angle, scipy, h5py
+from angle import angle
+
+import scipy, h5py
 
 #ex. filepath = 'C:/Users/ltopuser/behavioral_syntax/utilities/data.mat'
 
@@ -24,6 +26,11 @@ def loading_data(filepath):
   scipy.io.savemat('meanAngles.mat', dict(y=meanAngles))
   
   return angleArray, meanAngles
+
+
+#loading data:
+#angles = sio.loadmat('C:/Users/ltopuser/behavioral_syntax/data/angles.mat')
+#array = angles.get('x')
 
 
 #loading data:
