@@ -82,7 +82,7 @@ for i in range(fileNum):
     # NaNs.  Remove these here.
     nan_row_indices = np.isnan(anglesNoNaN)
     nanRows = np.where(nan_row_indices == True)
-    anglesNoNaN[nanRows] = []
+    anglesNoNaN = np.delete(anglesNoNaN,nanRows)
     
     # take a random subset of frames (could include repeats)
     frameInds = np.random.randint(0,y,size=frameNum)
