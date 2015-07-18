@@ -1,7 +1,11 @@
 import numpy as np
 import math
 
-def makeAngleArray(x, y):
+def get_true(array):
+    indices = [i for i, x in enumerate(array) if x]
+    return indices
+
+def angle(x, y):
 
     #MAKEANGLEARRAY Get tangent angles for each frame of normBlocks and rotate
     #               to have zero mean angle
@@ -49,16 +53,16 @@ def makeAngleArray(x, y):
         # find discontinuities larger than pi (skeleton cannot change direction
         # more than pi from one segment to the next)
         #1 to cancel diff
-        positiveJumps = np.array((np.diff(angles, n=1, axis=0) > math.pi)) + 1
-        negativeJumps = np.array((np.diff(angles, n=1, axis=0) < -math.pi)) + 1
+        positiveJumps = get_true(np.diff(angles, n=1, axis=0) > math.pi)
+        negativeJumps = get_true(np.diff(angles, n=1, axis=0) < -math.pi)
         
         # subtract 2pi from remainging data after positive jumps
-        for j in range(positiveJumps):
-            angles[positiveJumps[j]:] = angles[positiveJumps[j]:] - 2*math.pi
+        for j in positiveJumps:
+            angles[j:] = angles[j:] - 2*math.pi
         
         # add 2pi to remaining data after negative jumps
-        for j in range(negativeJumps):
-            angles[negativeJumps[j]:] = angles[negativeJumps[j]:] + 2*math.pi
+        for j in negativeJumps:
+            angles[j:] = angles[j:] + 2*math.pi
         
         # rotate skeleton angles so that mean orientation is zero
         meanAngle = np.mean(angles)
