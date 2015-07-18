@@ -26,11 +26,13 @@ postures = g.get('postures')
 
 N, M = np.shape(angles)
 
-neighbors = list(np.zeros(N))
+posture_sequence = list(np.zeros(N))
     
 for i in range(N):
     distances = [np.inf]*90
     for j in range(90):
         distances[j] = np.linalg.norm(angles[i]-postures[:,j])
     val = min(distances)
-    neighbors[i] = distances.index(val)
+    posture_sequence[i] = distances.index(val)
+    
+plt.hist(posture_sequence,bins=list(range(90)))
