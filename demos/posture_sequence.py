@@ -2,6 +2,9 @@ import numpy as np
 
 import scipy, h5py
 
+from matplotlib import pyplot as plt
+
+from simple_compression import simple_compression
 from angle import angle
 
 #get angle data:
@@ -36,3 +39,5 @@ for i in range(N):
     posture_sequence[i] = distances.index(val)
     
 plt.hist(posture_sequence,bins=list(range(90)))
+
+result = simple_compression(posture_sequence)
