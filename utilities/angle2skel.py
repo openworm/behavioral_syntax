@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Jul 20 14:15:00 2015
+
+@author: Dell
+"""
+
+import numpy as np
+import math
+
 def angle2skel(angleArray, meanAngle, arclength):
 
 # ANGLE2SKEL Take in an angle array and integrate over the angles to get
@@ -36,13 +46,14 @@ def angle2skel(angleArray, meanAngle, arclength):
     skelY = np.array([[np.NaN]*numFrames for i in range(numAngles+1)])
     
     for i in range(numFrames):
-        # add up x-contributions of angleArray, rotated by meanAngle
-        skelX[i] = [0; np.cumsum(cos( angleArray[i] + meanAngle[i] ) * ...
-            arclength/(numAngles + 1)) ];
         
+        angle = (angleArray[i] + meanAngle[i])*arclength/(numAngles + 1)
+        cos = np.array([math.cos(i) for i in angle])
+        sin = np.array([math.sin(i) for i in angle])
+        
+        # add up x-contributions of angleArray, rotated by meanAngle
+        skelX[i] = np.hstack((np.array(0),np.cumsum(cos)))
         # add up y-contributions of angleArray, rotated by meanAngle
-        skelY(:, ii) = [0; cumsum(sin( angleArray(:, ii) + meanAngle(ii) ) * ...
-            arclength/(numAngles + 1)) ];
-    end
+        skelY[i] = np.hstack((np.array(0),np.cumsum(sin)))
     
     return skelX, skelY
