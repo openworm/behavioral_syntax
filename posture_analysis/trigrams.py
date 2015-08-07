@@ -1,3 +1,10 @@
+import operator
+import matplotlib.pyplot as plt
+from scipy.stats import itemfreq
+import numpy as np
+
+all_postures = np.load('/Users/macbook/Documents/c_elegans/all_postures.npy')
+  
 def ngrams(input, n):
   input = input.split(' ')
   output = {}
@@ -6,9 +13,31 @@ def ngrams(input, n):
     output.setdefault(g, 0)
     output[g] += 1
   return output
-  
-  
-#sort trigrams 
-merriam = ngrams(all_postures[0],3)
 
-sorted_merriam = sorted(merriam.items(), key=operator.itemgetter(1),reverse=True)
+for i in range(len(all_postures)):
+    trigram = ngrams(all_postures[0],3)
+    
+    #looking at the distribution of trigram frequency:
+    dist = itemfreq(list(merriam.values()))
+        
+    fig, ax = plt.subplots(nrows=1,ncols=1)
+    fig.set_size_inches(20, 20)
+    ax.bar(dist[:,0],dist[:,1])
+
+
+#plot cumulative distribution:
+cum = 0
+cumsum = np.zeros(len(dist[:,1]))
+for i in range(len(dist[:,1])):
+    cum+=dist[:,1][i]
+    cumsum[i]=cum/np.dot(dist[:,0],dist[:,1])
+    
+fig, ax = plt.subplots(nrows=1,ncols=1)
+fig.set_size_inches(20, 20)
+ax.plot(dist[:,0],cumsum)
+
+#or view it as a 2d-array:
+dist[:,0] = dist[:,0][np.newaxis].T
+cumsum = cumsum[np.newaxis].T
+
+np.hstack((dist[:,0],cumsum))
