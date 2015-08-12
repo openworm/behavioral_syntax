@@ -41,3 +41,20 @@ dist[:,0] = dist[:,0][np.newaxis].T
 cumsum = cumsum[np.newaxis].T
 
 np.hstack((dist[:,0],cumsum))
+
+#computing trigram probability: 
+
+#count number of times c12 occurs:
+def slicedict(d, s):
+    return sum({k:v for k,v in d.items() if k.startswith(s)}.values())
+
+def calc_prob(trigram,tri,vocab_size):
+    #vocab_size is set to 90 for the behavioral_syntax paper    
+    
+    alpha = tri.split(' ')[0:2]
+    bi_alpha = ' '.join(alpha)
+    
+    prob = (slicedict(trigram,tri)+1)/(slicedict(trigram,bi_alpha)+vocab_size)
+    
+    return prob
+    
