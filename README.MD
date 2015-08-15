@@ -12,5 +12,5 @@ adjacent duplicates. i.e. {3,4,4,5,75,75,6,6,6} = {3,45,75,6}
 4. After step 3 is done, all kinds of NLP methods(ex. trigrams) or bio-informatic methods for discrete sequences of data may be used. 
 
 #### Andre Brown chose 90 postures shown here:
-![alt tag] (raw.githubusercontent.com/AidanRocke/behavioral_syntax/master/90_postures.png)
+![hr] (raw.githubusercontent.com/AidanRocke/behavioral_syntax/master/90_postures.png)
 
