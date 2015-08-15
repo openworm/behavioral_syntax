@@ -2,9 +2,6 @@
 """
 Created on Mon Jul 20 14:15:00 2015
 
-@author: Dell
-"""
-
 import numpy as np
 import math
 
@@ -31,29 +28,24 @@ def angle2skel(angleArray, meanAngle, arclength):
 #                x-coordinates
 #   skelY      - a numAngles + 1 by numFrames array of skeleton
 #                y-coordinates
-# 
-# Copyright Medical Research Council 2013
-# André Brown, abrown@mrc-lmb.cam.ac.uk, aexbrown@gmail.com
-# Released under the terms of the GNU General Public License, see
-# readme.txt
 
     # get dimensions
-    numFrames, numAngles  = np.shape(angleArray)
+    numFrames, numAngles   = np.shape(angleArray)
     
     
     # initialisation
-    skelX = np.array([[np.NaN]*numAngles+1 for i in range(numFrames)])
-    skelY = np.array([[np.NaN]*numFrames for i in range(numAngles+1)])
+    skelX = np.array([[np.NaN]*(numAngles+1) for i in range(numFrames)])
+    skelY = np.array([[np.NaN]*(numAngles+1) for i in range(numFrames)])
     
     for i in range(numFrames):
         
-        angle = (angleArray[i] + meanAngle[i])*arclength/(numAngles + 1)
+        angle = (angleArray[i] + meanAngle[i])
         cos = np.array([math.cos(i) for i in angle])
         sin = np.array([math.sin(i) for i in angle])
         
         # add up x-contributions of angleArray, rotated by meanAngle
-        skelX[i] = np.hstack((np.array(0),np.cumsum(cos)))
+        skelX[i] = np.hstack((np.array(0),np.cumsum(cos)*arclength/(numAngles)))
         # add up y-contributions of angleArray, rotated by meanAngle
-        skelY[i] = np.hstack((np.array(0),np.cumsum(sin)))
+        skelY[i] = np.hstack((np.array(0),np.cumsum(sin)*arclength/(numAngles)))
     
     return skelX, skelY
