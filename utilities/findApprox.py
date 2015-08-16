@@ -20,7 +20,7 @@ def findApprox(traj, patternTraj, r2Thresh):
     for i in range(N):
         # calculate the correlation between the current trajectory and the
         # pattern trajectory
-        R = np.corrcoef([row[i] for row in Q], patternTraj);
+        R = np.corrcoef([row[i] for row in Q], patternTraj)
         R2 = R[0][1]**2;
         
     
