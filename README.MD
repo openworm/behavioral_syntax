@@ -14,3 +14,5 @@ adjacent duplicates. i.e. {3,4,4,5,75,75,6,6,6} = {3,45,75,6}
 ##### Example of a template with 90 postures extracted using Kmeans++:
 ![hr] (https://raw.githubusercontent.com/AidanRocke/behavioral_syntax/master/90_postures.png)
 
+##### Visualizing the tangent angle distance between postures:
+![hr] (https://github.com/AidanRocke/behavioral_syntax/blob/master/bokeh_postures_mds.png)
