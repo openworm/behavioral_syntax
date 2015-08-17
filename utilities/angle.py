@@ -53,8 +53,8 @@ def angle(x, y):
         # find discontinuities larger than pi (skeleton cannot change direction
         # more than pi from one segment to the next)
         #1 to cancel diff
-        positiveJumps = get_true(np.diff(angles, n=1, axis=0) > math.pi)
-        negativeJumps = get_true(np.diff(angles, n=1, axis=0) < -math.pi)
+        positiveJumps = np.array(get_true(np.diff(angles, n=1, axis=0) > 5))+1
+        negativeJumps = np.array(get_true(np.diff(angles, n=1, axis=0) < -5))+1 
         
         # subtract 2pi from remainging data after positive jumps
         for j in positiveJumps:
