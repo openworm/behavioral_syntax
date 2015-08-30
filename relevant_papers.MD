@@ -1,5 +1,5 @@
 #Behavioral Syntax paper and supporting theory:
-1. Behavioral Syntax: https://github.com/aexbrown/Behavioural_Syntax
+1. Behavioral Syntax: http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004322
 2. proprioceptive coupling: http://dash.harvard.edu/bitstream/handle/1/11931800/35902884.pdf?sequence=1
 
 #Classifiers:
