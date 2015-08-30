@@ -5,6 +5,8 @@
 #Classifiers:
 1. sentiment_classifiers: http://www.cs.cornell.edu/home/llee/papers/sentiment.pdf
 2. Twitter sentiment classification: http://cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf
+3. Combinatorial Pattern Matching directory: http://www.cs.ucr.edu/~stelo/cpm/ 
+4. Combinatorial Pattern Matching introduction: http://bix.ucsd.edu/bioalgorithms/presentations/Ch09_CombinatorialPatternMatching.pdf
 
 #Alternative approaches and representations:
 1. Eigenworm: http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000028
