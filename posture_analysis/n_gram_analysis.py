@@ -1,4 +1,6 @@
-import operator
+from vis_functions import grid_plot
+
+
 import matplotlib.pyplot as plt
 from scipy.stats import itemfreq
 import numpy as np
@@ -14,27 +16,25 @@ def ngrams(input, n):
     output[g] += 1
   return output
 
-for i in range(len(all_postures)):
+N = len(all_postures)
+cumulative = []
+
+for i in range(N):
     trigram = ngrams(all_postures[0],3)
     
     #looking at the distribution of trigram frequency:
     dist = itemfreq(list(trigram.values()))
-        
-    fig, ax = plt.subplots(nrows=1,ncols=1)
-    fig.set_size_inches(20, 20)
-    ax.bar(dist[:,0],dist[:,1])
 
-
-#plot cumulative distribution:
-cum = 0
-cumsum = np.zeros(len(dist[:,1]))
-for i in range(len(dist[:,1])):
-    cum+=dist[:,1][i]
-    cumsum[i]=cum/np.dot(dist[:,0],dist[:,1])
+    #plot cumulative distribution...see whether it's Zipfian or not:
+    cum = 0
+    cumsum = np.zeros(len(dist[:,1]))
+    for j in range(len(dist[:,1])):
+        cum+=dist[:,1][j]
+        cumsum[j]=cum/np.dot(dist[:,0],dist[:,1])
     
-fig, ax = plt.subplots(nrows=1,ncols=1)
-fig.set_size_inches(20, 20)
-ax.plot(dist[:,0],cumsum)
+    cumulative.append(cumsum)
+    
+grid_plot(cumulative,'CDF','/Users/macbook/Github/behavioral_syntax/plotting/','trigram_dists')
 
 #or view it as a 2d-array:
 dist[:,0] = dist[:,0][np.newaxis].T
