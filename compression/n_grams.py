@@ -1,3 +1,14 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jul 19 07:28:51 2015
+
+@author: aidanrocke
+
+this function takes a posture_sequence and returns as output:
+1) unique n_grams
+2) the frequency of their occurrence
+"""
+
 import numpy as np
 
 def n_grams(posture_seq, n):

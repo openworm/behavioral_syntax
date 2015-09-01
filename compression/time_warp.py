@@ -2,13 +2,13 @@
 """
 Created on Sun Jul 19 07:28:51 2015
 
-@author: Dell
+@author: aidanrocke
 """
 
 def time_warp(ts):
-    """ Return a new list in which all adjacent
-        duplicates from ts have been removed.
-    """
+    #""" Return a new list in which all adjacent
+       # duplicates from ts have been removed.
+    #"""
     result = []
     most_recent_elem = None
     for e in ts:
