@@ -18,7 +18,7 @@ for i in range(len(all_postures)):
     trigram = ngrams(all_postures[0],3)
     
     #looking at the distribution of trigram frequency:
-    dist = itemfreq(list(merriam.values()))
+    dist = itemfreq(list(trigram.values()))
         
     fig, ax = plt.subplots(nrows=1,ncols=1)
     fig.set_size_inches(20, 20)

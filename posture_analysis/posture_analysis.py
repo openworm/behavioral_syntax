@@ -1,28 +1,18 @@
-import scipy
+
 
 from scipy.stats import itemfreq
-
-from angle import angle
-
+from scipy import io 
 import os
-
-from scipy import interpolate
-from pandas import Series
 import numpy as np
 import h5py
 
 from matplotlib import pyplot as plt
 
-#from matplotlib import pyplot as plt
-
-#from simple_compression import simple_compression
-#from angle import angle
-
 directory = '/Users/macbook/Documents/c_elegans/features/'
 
 files = os.listdir('/Users/macbook/Documents/c_elegans/features/')
 
-g = scipy.io.loadmat('/Users/macbook/Documents/c_elegans/postures')
+g = io.loadmat('/Users/macbook/Documents/c_elegans/postures')
 
 postures = g.get('postures')
 
@@ -75,20 +65,3 @@ for i in range(len(files)):
             posture_sequence = posture_sequence + ' ' + str(distances.index(val))
             
         all_postures.append(posture_sequence)
-    
-    #indices = list(range(C))
-    #get difference:
-    #nonan_indices = list(set(indices)-set(nans))
-    
-'''posture_distribution = []
-#correct for segmentation faults:
-for i in range(16):
-    z = itemfreq(all_postures[i])
-    z[0][1] = z[0][1]-NaNs[i]
-    posture_distribution.append(z)
-    
-directory = '/Users/macbook/Documents/c_elegans/posture_analysis/'
-for i in range(16):
-    fig, ax = plt.subplot(nrows=1,ncols=1)
-    ax.bar(posture_distribution[i][:,0],posture_distribution[i][:,1])
-    fig.savefig()'''
