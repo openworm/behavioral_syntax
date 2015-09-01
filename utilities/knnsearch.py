@@ -1,5 +1,5 @@
 @author: aidanrocke
-"""
+
 import numpy as np
 
 #inputs are either nxd numpy arrays in a d-dimensional space or integers for the 

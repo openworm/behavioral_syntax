@@ -8,9 +8,11 @@ from pandas import Series
 import numpy as np
 import h5py
 
+from vis_functions import grid_plot
+
 from matplotlib import pyplot as plt
 
-directory = '/Users/macbook/Documents/c_elegans/raw_data/on-food-1/'
+directory = '/Users/macbook/Github/behavioral_syntax/data/raw_data/on-food-1/'
 
 files = os.listdir(directory)[1:16]
 
@@ -20,29 +22,29 @@ postures = g.get('postures')
 all_postures = []
 
 
-skel_nans = []
+N = len(files)
 
-angle_nans = []
-
-NaNs = []
-
-for i in range(len(files)):
+for i in range(N):
     #get skeleton data:
     f = io.loadmat(directory+files[i])
     #getting the right cell array:
     X = f['worm']['posture'][0][0][0]['skeleton'][0][0][0][0]
     Y = f['worm']['posture'][0][0][0]['skeleton'][0][0][0][0]
     
-    angles, mean = angle(X.T,Y.T)
-    C,c = np.shape(X)
+    X = X.T
+    Y= Y.T
     
-    j = 0
-    #count the number of nan arrays:
-    for i in range(C):
-        if sum(np.isnan(X[i])) > 0:
-            j+=1
+    indices = []
+    for j in range(len(X)):
+        if sum(np.isnan(X[j]))== 0:
+            indices.append(j)
         
-    NaNs.append(j)
+    X = X[indices] 
+    Y = Y[indices]
+    
+    angles, mean = angle(X,Y)
+    C,c = np.shape(X)
+
     
     posture_sequence = list(np.zeros(C))
     
@@ -54,26 +56,52 @@ for i in range(len(files)):
         posture_sequence[i] = distances.index(val)
         
     all_postures.append(posture_sequence)
+    
+#distribution of pauses:
+def pauses(ts):
+    """ Return the distribution of pauses.
+    """
+    j = 0
+    pauses = []
+    most_recent_elem = None
+    for e in ts:
+        if e == most_recent_elem:
+            j+=1
+        else:
+            most_recent_elem = e
+            pauses.append(j)
+            j=0
 
-    nans = []
+    return pauses
+
+all_pauses = []
+for i in range(N):
+    all_pauses.append(pauses(all_postures[i]))
     
-    for j in range(C):
-        if sum(np.isnan(X[j])) > 0:
-            nans.append(j)
-            
-    angle_nans.append(nans)
+grid_plot(all_pauses,directory[:-24]+'plotting/pauses/','15_pause_distributions')
+  
+
+#one plot of everything:
+P = []
+for i in range(N):
+    P+=all_pauses[i]
     
-    #indices = list(range(C))
-    #get difference:
-    #nonan_indices = list(set(indices)-set(nans))
-    
+fig, axis = plt.subplots(ncols=1, nrows=1)
+fig.set_size_inches(20, 20)
+z = itemfreq(P)
+axis.plot(z[:,0],z[:,1],'o')
+axis.set_title('length of pauses',size='medium',weight='bold',color='steelblue',backgroundcolor=(1,  0.85490196,  0.7254902))
+fig.savefig('/Users/macbook/Github/behavioral_syntax/plotting/pauses/'+'distribution of pauses'+'.png',dpi=fig.dpi)
+
+
+
+#time spent in each posture:
 posture_distribution = []
 #correct for segmentation faults:
 for i in range(15):
     z = itemfreq(all_postures[i])
     rows, cols = np.shape(z)
     q = np.zeros((rows,cols))
-    z[0][1] = z[0][1]-NaNs[i]
     q[:,1] = z[:,1]/sum(z[:,1])
     q[:,0] = z[:,0]
     posture_distribution.append(q)
@@ -82,4 +110,7 @@ for i in range(15):
 for i in range(15):
     fig = plt.figure()
     plt.bar(posture_distribution[i][:,0],posture_distribution[i][:,1])
-    fig.savefig('C:/Users/Dell/Documents/behavioral_syntax//plots/'+str(i)+'.png',dpi=fig.dpi)
+    fig.savefig('/Users/macbook/Github/behavioral_syntax/plots/'+str(i)+'.png',dpi=fig.dpi)
+    
+
+
