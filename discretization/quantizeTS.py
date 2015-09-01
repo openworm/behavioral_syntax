@@ -1,5 +1,5 @@
 import numpy as np
-import math
+import numpy.matlib 
 
 def find_subsequence(seq, subseq):
     target = np.dot(subseq, subseq)
@@ -68,7 +68,7 @@ def quantizeTS(timeSeries, centers, warpNum, flickThresh):
         for j in range(len(flicks)):
             if stateSequence[flicks[j]] == stateSequence[flicks[j] + i + 1]:
                 # we have a flicker, mark it for removal
-                stateSequence[flicks[j] + 1:flicks[j] + i+1] = np.matlib.repmat(stateSequence[flicks[j]], i, 1).T[0]
+                stateSequence[flicks[j] + 1:flicks[j] + i+1] = numpy.matlib.repmat(stateSequence[flicks[j]], i, 1).T[0]
     
     # find places where the state changes
     changeInds = np.hstack((np.array(0), np.where(np.diff(stateSequence) != 0)[0], np.array(len(stateSequence)+1)))
@@ -104,16 +104,16 @@ def quantizeTS(timeSeries, centers, warpNum, flickThresh):
             # if the target length is greater than 1, then all lengths must be
             # warpNum, except possibly the last
             modulus = np.mod(constLengths[i], warpNum)
-            if targetLengths[i] > 1 and modulus == 0:
-                currentLengths = np.tile(warpNum, (targetLengths[i], 1))
+            if (targetLengths[i] > 1) and (modulus == 0):
+                currentLengths = numpy.matlib.repmat(warpNum, targetLengths[i], 1).T[0]
             else:
-                currentLengths = np.hstack((np.matlib.repmat(warpNum, targetLengths[i], 1).T[0], modulus))
+                currentLengths = np.hstack((numpy.matlib.repmat(warpNum, targetLengths[i], 1).T[0], modulus))
         
         # add the state lengths for the current repeated segment
-        stateLengths[count:count + len(currentLengths) - 1] = currentLengths
+        stateLengths[count:count + len(currentLengths)] = currentLengths
         
         # increment count
-        count = count + len(currentLengths)
+        count += len(currentLengths)
     
     # combine state sequence with state lengths
     stateSequence = np.hstack((stateSequence,stateLengths))

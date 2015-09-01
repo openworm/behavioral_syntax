@@ -1,5 +1,3 @@
-import scipy
-
 from scipy.stats import itemfreq
 import os
 
@@ -12,7 +10,7 @@ from vis_functions import grid_plot
 
 from matplotlib import pyplot as plt
 
-directory = '/Users/macbook/Github/behavioral_syntax/data/raw_data/on-food-1/'
+directory = '/Users/macbook/Documents/c_elegans/raw_data/on-food-1/'
 
 files = os.listdir(directory)[1:16]
 
@@ -112,5 +110,6 @@ for i in range(15):
     plt.bar(posture_distribution[i][:,0],posture_distribution[i][:,1])
     fig.savefig('/Users/macbook/Github/behavioral_syntax/plots/'+str(i)+'.png',dpi=fig.dpi)
     
+
 
 
