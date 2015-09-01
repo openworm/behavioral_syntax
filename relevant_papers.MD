@@ -1,12 +1,16 @@
-#Behavioral Syntax paper and supporting theory:
+##Behavioral Syntax paper and supporting theory:
 1. Behavioral Syntax: http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004322
 2. proprioceptive coupling: http://dash.harvard.edu/bitstream/handle/1/11931800/35902884.pdf?sequence=1
+
+##Sequence analysis and Pattern Matching:
+1. Combinatorial Pattern Matching directory: http://www.cs.ucr.edu/~stelo/cpm/ 
+2. Combinatorial Pattern Matching introduction: http://bix.ucsd.edu/bioalgorithms/presentations/Ch09_CombinatorialPatternMatching.pdf
+3. Sequitur algorithm: http://www.jair.org/media/374/live-374-1630-jair.pdf
 
 #Classifiers:
 1. sentiment_classifiers: http://www.cs.cornell.edu/home/llee/papers/sentiment.pdf
 2. Twitter sentiment classification: http://cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf
-3. Combinatorial Pattern Matching directory: http://www.cs.ucr.edu/~stelo/cpm/ 
-4. Combinatorial Pattern Matching introduction: http://bix.ucsd.edu/bioalgorithms/presentations/Ch09_CombinatorialPatternMatching.pdf
+
 
 #Alternative approaches and representations:
 1. Eigenworm: http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000028
