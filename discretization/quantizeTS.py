@@ -68,17 +68,16 @@ def quantizeTS(timeSeries, centers, warpNum, flickThresh):
         for j in range(len(flicks)):
             if stateSequence[flicks[j]] == stateSequence[flicks[j] + i + 1]:
                 # we have a flicker, mark it for removal
-                z = np.matlib.repmat(stateSequence[flicks[j]], i, 1)
-                stateSequence[flicks[j] + 1:flicks[j] + i] = z.T[0]
+                stateSequence[flicks[j] + 1:flicks[j] + i+1] = np.matlib.repmat(stateSequence[flicks[j]], i, 1).T[0]
     
     # find places where the state changes
-    changeInds = np.hstack((np.array(0), np.where(np.diff(stateSequence) != 0), np.array(len(stateSequence)+1)))
+    changeInds = np.hstack((np.array(0), np.where(np.diff(stateSequence) != 0)[0], np.array(len(stateSequence)+1)))
     
     # get the lengths of the constant segments
     constLengths = np.diff(changeInds)
     
     # find how many repeats must be removed from each constant segment
-    targetLengths = math.ceil(constLengths/warpNum)
+    targetLengths = np.ceil(constLengths/warpNum)
     cutLengths = constLengths - targetLengths
     
     # loop through constant state segments
@@ -95,7 +94,7 @@ def quantizeTS(timeSeries, centers, warpNum, flickThresh):
     # get the number of times each state in the reduced state sequence was 
     # present in the original
     stateLengths = np.array([np.nan]*len(stateSequence))
-    count = 1;
+    count = 1
     for i in range(len(targetLengths)):
         # if the target length is 1, then the state length is simply the
         # corresponding cutLength + 1
@@ -106,9 +105,9 @@ def quantizeTS(timeSeries, centers, warpNum, flickThresh):
             # warpNum, except possibly the last
             modulus = np.mod(constLengths[i], warpNum)
             if targetLengths[i] > 1 and modulus == 0:
-                currentLengths = np.tile(warpNum, (targetLengths[i], 1));
+                currentLengths = np.tile(warpNum, (targetLengths[i], 1))
             else:
-                currentLengths = np.hstack(np.matlib.repmat(warpNum, targetLengths[i] - 1, 1), modulus)
+                currentLengths = np.hstack((np.matlib.repmat(warpNum, targetLengths[i], 1).T[0], modulus))
         
         # add the state lengths for the current repeated segment
         stateLengths[count:count + len(currentLengths) - 1] = currentLengths
@@ -117,6 +116,6 @@ def quantizeTS(timeSeries, centers, warpNum, flickThresh):
         count = count + len(currentLengths)
     
     # combine state sequence with state lengths
-    stateSequence = np.hstack(stateSequence,stateLengths)
+    stateSequence = np.hstack((stateSequence,stateLengths))
     
     return stateSequence, distVec
