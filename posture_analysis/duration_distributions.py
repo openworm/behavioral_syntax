@@ -3,23 +3,18 @@ import scipy
 from scipy.stats import itemfreq
 import os
 
-from scipy import interpolate
+from scipy import io
 from pandas import Series
 import numpy as np
 import h5py
 
 from matplotlib import pyplot as plt
 
-#from matplotlib import pyplot as plt
+directory = '/Users/macbook/Documents/c_elegans/raw_data/on-food-1/'
 
-#from simple_compression import simple_compression
-#from angle import angle
+files = os.listdir(directory)[1:16]
 
-directory = 'C:/Users/Dell/Documents/behavioral_syntax/data/'
-
-files = os.listdir(directory)
-
-g = scipy.io.loadmat('C:/Users/Dell/Documents/behavioral_syntax/'+'90_postures.mat')
+g = io.loadmat('/Users/macbook/Github/behavioral_syntax/data/'+'postures.mat')
 postures = g.get('postures')
 
 all_postures = []
@@ -31,21 +26,14 @@ angle_nans = []
 
 NaNs = []
 
-
-
 for i in range(len(files)):
     #get skeleton data:
-    f = h5py.File(directory+files[i])
+    f = io.loadmat(directory+files[i])
     #getting the right cell array:
-    l1 = f.get('worm')
-    l2 = l1.get('posture')
-    l3 = l2.get('skeleton')
+    X = f['worm']['posture'][0][0][0]['skeleton'][0][0][0][0]
+    Y = f['worm']['posture'][0][0][0]['skeleton'][0][0][0][0]
     
-    #getting the x and y coordinates:
-    X = np.array(l3.get('x'))
-    Y = np.array(l3.get('y'))
-    
-    angles, mean = angle(X,Y)
+    angles, mean = angle(X.T,Y.T)
     C,c = np.shape(X)
     
     j = 0
