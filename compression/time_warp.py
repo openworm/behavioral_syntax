@@ -17,3 +17,9 @@ def time_warp(ts):
             most_recent_elem = e
 
     return result
+
+
+#using list comprehensions for flick_thresh:
+#let's suppose L is a list of length n:
+
+if L[0]==L[n-1] and L[]

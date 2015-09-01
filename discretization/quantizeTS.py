@@ -3,8 +3,10 @@ import math
 
 def find_subsequence(seq, subseq):
     target = np.dot(subseq, subseq)
-    candidates = np.where(np.correlate(seq, subseq, mode='valid') == target)[0]
+    candidates_1 = np.where(np.correlate(seq, subseq, mode='valid') == target)[0]
+    candidates_2 = np.where(np.correlate(seq, -subseq, mode='valid') == target)[0]
     # some of the candidates entries may be false positives, double check
+    candidates = np.hstack((candidates_1,candidates_2))
     check = candidates[:, np.newaxis] + np.arange(len(subseq))
     mask = np.all((np.take(seq, check) == subseq), axis=-1)
     return candidates[mask]
@@ -50,23 +52,24 @@ def quantizeTS(timeSeries, centers, warpNum, flickThresh):
 
 
 # quantize the time series
-    [stateSequence, distVec] = knnsearch(timeSeries, centers, 1)
+    [stateSequence, distVec] = knnsearch(timeSeries, centers)
     
     # get sign of state changes
     stateDiff = np.sign(np.diff(stateSequence))
     
     # find and remove different length flickers in turn
-    for i in range(flickThresh):
+    for i in range(1,flickThresh):
         # find candidate flickers;
         flicks = np.hstack((np.array(1),np.zeros(i-1),np.array(-1)))
         substr = np.hstack((np.array(-1),np.zeros(i-1),np.array(1)))
-        flicks = np.hstack((flicks, find_subsequence(stateDiff,substr)[0]))
+        flicks = find_subsequence(stateDiff,substr)
         
         # check if states at beginning and end of candidates are the same
         for j in range(len(flicks)):
             if stateSequence[flicks[j]] == stateSequence[flicks[j] + i + 1]:
                 # we have a flicker, mark it for removal
-                stateSequence[flicks[j] + 1:flicks[j] + i] = np.matlib.repmat(stateSequence[flicks[j]], i, 1)
+                z = np.matlib.repmat(stateSequence[flicks[j]], i, 1)
+                stateSequence[flicks[j] + 1:flicks[j] + i] = z.T[0]
     
     # find places where the state changes
     changeInds = np.hstack((np.array(0), np.where(np.diff(stateSequence) != 0), np.array(len(stateSequence)+1)))
