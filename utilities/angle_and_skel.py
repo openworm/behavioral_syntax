@@ -1,7 +1,7 @@
 import numpy as np
 import math
 
-#in this script is contained the angle function, the angle to skeleton function(A2skel)
+#in this script is contained the angle function, the angle to skeleton function(angle2skel)
 #and the many angles to many skeletons function(MA2skel). 
 
 def get_true(array):
@@ -10,22 +10,22 @@ def get_true(array):
 
 def angle(x, y):
 
-    #MAKEANGLEARRAY Get tangent angles for each frame of normBlocks and rotate
-    #               to have zero mean angle
-    #
-    #   [ANGLEARRAY, MEANANGLES] = MAKEANGLEARRAY(X, Y)
-    #
-    #   Input:
-    #       x - the x coordinates of the worm skeleton (equivalent to 
-    #           dataBlock{4}(:,1,:)
-    #       y - the y coordinates of the worm skeleton (equivalent to 
-    #           dataBlock{4}(:,2,:)
-    #
-    #   Output:
-    #       angleArray - a numFrames by numSkelPoints - 1 array of tangent
-    #                    angles rotated to have mean angle of zero.
-    #       meanAngles - the average angle that was subtracted for each frame
-    #                    of the video.
+    """MAKEANGLEARRAY Get tangent angles for each frame of normBlocks and rotate
+                   to have zero mean angle
+    
+       [ANGLEARRAY, MEANANGLES] = MAKEANGLEARRAY(X, Y)
+    
+       Input:
+           x - the x coordinates of the worm skeleton (equivalent to 
+               dataBlock{4}(:,1,:)
+           y - the y coordinates of the worm skeleton (equivalent to 
+               dataBlock{4}(:,2,:)
+    
+       Output:
+           angleArray - a numFrames by numSkelPoints - 1 array of tangent
+                        angles rotated to have mean angle of zero.
+           meanAngles - the average angle that was subtracted for each frame
+                        of the video."""
     
     
     
@@ -78,13 +78,13 @@ def angle(x, y):
         
     return angleArray, meanAngles
 
-def A2skel(angle,mean_angle,arclength,numAngles):
-    # Input:
-    # angleArray - a numSkelPoints - 1 by numFrames array of skeleton
-    #                tangent angles
-    # mean_angle - the average value of angleArray
-    # arclength  - the total arc length of the skeleton to be reconstructed
-    # numAngles  - the length of the angleArray
+def angle2skel(angle,mean_angle,arclength,numAngles):
+    """Input:
+        angleArray - a numSkelPoints - 1 by numFrames array of skeleton
+                     tangent angles
+      mean_angle - the average value of angleArray
+      arclength  - the total arc length of the skeleton to be reconstructed
+      numAngles  - the length of the angleArray"""
 
     
     angle = angle + mean_angle
@@ -132,6 +132,6 @@ def MA2skel(angleArray, meanAngle, arclength):
     
     for i in range(numFrames):
         
-        skelX[i],skelY[i]= A2skel(angleArray[i],meanAngle[i],arclength,numAngles)
+        skelX[i],skelY[i]= angle2skel(angleArray[i],meanAngle[i],arclength,numAngles)
     
     return skelX, skelY
