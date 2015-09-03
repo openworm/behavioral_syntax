@@ -1,50 +1,124 @@
-from vis_functions import grid_plot
+"""
+Created on Wed Sep  2 23:47:50 2015
 
+@author: aidanrocke
+"""
 
-import matplotlib.pyplot as plt
+from behavioral_syntax.plotting.vis_functions import grid_plot
 from scipy.stats import itemfreq
 import numpy as np
 
 all_postures = np.load('/Users/macbook/Documents/c_elegans/all_postures.npy')
-  
-def ngrams(input, n):
-  input = input.split(' ')
-  output = {}
-  for i in range(len(input)-n+1):
-    g = ' '.join(input[i:i+n])
-    output.setdefault(g, 0)
-    output[g] += 1
-  return output
 
-N = len(all_postures)
-cumulative = []
+def n_grams(posture_seq, n):
+    """ 
+    Input:
+      posture_seq - a numpy array to be compressed
+      n           - the n in n-grams (also the number of columns in output nGrams)
+     
+      Output
+        nGrams  - a len(dataVec)-(n+1) by n array containing all the n-grams in dataVec  
+        nGram_seq  - a len(dataVec)-(n+1) by n array containing all the n-grams in dataVec
+        occurrences - the number of times each unique nGram occurs""" 
+        
+    nGram_seq = []   
 
-for i in range(N):
-    trigram = ngrams(all_postures[0],3)
+    # check inputs
+    if len(np.shape(posture_seq)) > 1:
+        raise Exception('dataVec must be a row vector')
+        
+    posture_seq = posture_seq.split(' ')
+    output = {}
+    for i in range(len(posture_seq)-n+1):
+      g = ' '.join(posture_seq[i:i+n])
+      nGram_seq.append(g)
+      output.setdefault(g, 0)
+      output[g] += 1
     
-    #looking at the distribution of trigram frequency:
-    dist = itemfreq(list(trigram.values()))
-
-    #plot cumulative distribution...see whether it's Zipfian or not:
-    cum = 0
-    cumsum = np.zeros(len(dist[:,1]))
-    for j in range(len(dist[:,1])):
-        cum+=dist[:,1][j]
-        cumsum[j]=cum/np.dot(dist[:,0],dist[:,1])
+    nGrams = list(output.keys())
+    occurrences = output.values()
     
-    cumulative.append(cumsum)
+    return nGrams, occurrences, nGram_seq
+        
+        
     
-grid_plot(cumulative,'CDF','/Users/macbook/Github/behavioral_syntax/plotting/','trigram_dists')
+def nGram2traj(postures, nGrams):
+    """
+      NGRAM2TRAJ converts a matrix of n-grams into a corresponding matrix of
+      angle trajectories using the input postures.
+     
+        nGrams  - a len(dataVec)-(n+1) by n list containing all the n-grams in dataVec """ 
+    
+    
+    n, m = len(nGrams), len(nGrams[0].split(' '))
+    
+    angle_trajectories = [[0 for x in range(m)] for x in range(n)]
+    
+    for i in range(n):
+        l1 = nGrams[i].split(' ')
+        l2 = [int(i) for i in l1]
+        angle_trajectories[i] = [postures[l2[0]],postures[l2[1]],postures[l2[2]]]
+    
+    return angle_trajectories
+    
 
-#or view it as a 2d-array:
-dist[:,0] = dist[:,0][np.newaxis].T
-cumsum = cumsum[np.newaxis].T
 
-np.hstack((dist[:,0],cumsum))
+def nGramAccumulateStep(nGram_seq, stepSize):
+    """
+         NGRAMACCUMULATENUMERICAL Works through the input matrix of n-grams in
+          chunks to determine growth of number of unique sequences with growing
+          number of observed n-grams.  It can be much faster that 
+          nGramAccumulateNumerical if the step size is large.
+         
+          Input
+            nGram_seq   - A temporal sequence of n-grams
+            stepSize - The step size for moving through n-grams.
+         
+          Output
+            accCurve - The accumulation curve of previously unseen n-grams as they
+                       occur in nGrams scanned from start to finish"""
+    
+    
+    
+    # get the chunk boundaries
+    N = len(nGram_seq)
+    chunkBounds = np.linspace(stepSize,stepSize*int(N/stepSize),int(N/stepSize))
+    
+    # initialise
+    accCurve = np.hstack((1,np.array([np.nan]*len(chunkBounds))))
+    
+    # loop through n-gram chunks
+    for i in range(len(chunkBounds)):
+        sub_nGrams = nGram_seq[0:int(chunkBounds[i])]
+        accCurve[i+1] = len(set(sub_nGrams))
+    
+    return accCurve
 
-#computing trigram probability: 
+#plotting nGram cumulative distribution:
 
-#count number of times c12 occurs:
+def cumulative():
+    N = len(all_postures)
+    cumulative = []
+    
+    for i in range(N):
+        trigram = ngrams(all_postures[0],3)
+        
+        #looking at the distribution of trigram frequency:
+        dist = itemfreq(list(trigram.values()))
+    
+        #plot cumulative distribution...see whether it's Zipfian or not:
+        cum = 0
+        cumsum = np.zeros(len(dist[:,1]))
+        for j in range(len(dist[:,1])):
+            cum+=dist[:,1][j]
+            cumsum[j]=cum/np.dot(dist[:,0],dist[:,1])
+        
+        cumulative.append(cumsum)
+        
+    grid_plot(cumulative,'CDF','/Users/macbook/Github/behavioral_syntax/plotting/','trigram_dists')
+    
+#caculating ngram probabilities:
+    
 def slicedict(d, s):
     return sum({k:v for k,v in d.items() if k.startswith(s)}.values())
 
@@ -57,4 +131,3 @@ def calc_prob(trigram,tri,vocab_size):
     prob = (slicedict(trigram,tri)+1)/(slicedict(trigram,bi_alpha)+vocab_size)
     
     return prob
-    
