@@ -10,6 +10,7 @@
 1. Context Free Grammars: https://people.cs.umass.edu/~mccallum/courses/inlp2007/lect5-cfg.pdf
 2. Sequitur algorithm: http://www.jair.org/media/374/live-374-1630-jair.pdf
 3. Inferring structure from Sequences: http://www.cs.waikato.ac.nz/~ihw/papers/01IHW-Adaptivetextmining.pdf
+4. Inferring Sequential Structure: http://www.sequitur.info/Nevill-Manning.pdf
 
 ##Classifiers:
 1. sentiment_classifiers: http://www.cs.cornell.edu/home/llee/papers/sentiment.pdf
