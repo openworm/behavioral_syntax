@@ -1,8 +1,11 @@
 """
 Created on Wed Sep  2 23:47:50 2015
-
 @author: aidanrocke
 """
+
+#a first attempt at trying to generate new sequences:
+http://stackoverflow.com/questions/4265988/generate-random-numbers-with-a-given-numerical-distribution
+
 
 from behavioral_syntax.plotting.vis_functions import grid_plot
 from scipy.stats import itemfreq
