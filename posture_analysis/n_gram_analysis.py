@@ -1,17 +1,18 @@
 """
 Created on Wed Sep  2 23:47:50 2015
+
 @author: aidanrocke
 """
 
-#a first attempt at trying to generate new sequences:
-http://stackoverflow.com/questions/4265988/generate-random-numbers-with-a-given-numerical-distribution
+#note: it might be a good idea to add constraints to the simulation...the trigram
+#model will result in a lot of sequences that are 'ungrammatical'. 
 
-
-from behavioral_syntax.plotting.vis_functions import grid_plot
+#from behavioral_syntax.plotting.vis_functions import grid_plot
 from scipy.stats import itemfreq
 import numpy as np
+import random
 
-all_postures = np.load('/Users/macbook/Documents/c_elegans/all_postures.npy')
+#all_postures = np.load('/Users/macbook/Documents/c_elegans/all_postures.npy')
 
 def n_grams(posture_seq, n):
     """ 
@@ -41,7 +42,7 @@ def n_grams(posture_seq, n):
     nGrams = list(output.keys())
     occurrences = output.values()
     
-    return nGrams, occurrences, nGram_seq
+    return output, nGrams, occurrences, nGram_seq
         
         
     
@@ -125,12 +126,38 @@ def cumulative():
 def slicedict(d, s):
     return sum({k:v for k,v in d.items() if k.startswith(s)}.values())
 
-def calc_prob(trigram,tri,vocab_size):
-    #vocab_size is set to 90 for the behavioral_syntax paper    
+def calc_prob(sequence,trigram,bigram):
+    #vocab_size is set to 90 for the behavioral_syntax paper  
+    vocab_size = len(set((sequence.split(' '))))
+  
+    trigrams, x, y, z = n_grams(sequence,3)
     
-    alpha = tri.split(' ')[0:2]
-    bi_alpha = ' '.join(alpha)
-    
-    prob = (slicedict(trigram,tri)+1)/(slicedict(trigram,bi_alpha)+vocab_size)
+    if trigram.split(' ')[0:2] == bigram.split(' '):
+        prob = (trigrams.get(trigram)+1)/(slicedict(trigrams,bigram)+vocab_size)
+    else:
+        prob = 1/vocab_size
     
     return prob
+
+def random_distr(l):
+    r = random.uniform(0, 1)
+    s = 0
+    for item, prob in l:
+        s += prob
+        if s >= r:
+            return item
+    return l[-1]
+
+#note laplacian smoothing creates errors. 
+#sum of probabilities ends up being greater than 1.
+def trigram_probs(sequence,bigram):
+    l = []
+    
+    w,x,y,z = n_grams(sequence,3)
+
+    for i in x:
+        prob = calc_prob(sequence,i,bigram)
+        terminal = i.split(' ')[2]
+        l.append([terminal,prob])
+        
+    return l
