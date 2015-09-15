@@ -10,6 +10,8 @@ from vis_functions import grid_plot
 
 from matplotlib import pyplot as plt
 
+#note: there are no absolute pauses. 
+
 directory = '/Users/macbook/Documents/c_elegans/raw_data/on-food-1/'
 
 files = os.listdir(directory)[1:16]
