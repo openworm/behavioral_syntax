@@ -4,15 +4,13 @@ Created on Tue Sep 15 18:10:01 2015
 
 @author: aidanrocke
 """
-
+import itertools
 import numpy as np
 import random
 
 all_postures = np.load('/Users/cyrilrocke/Documents/c_elegans/data/arrays/all_postures.npy')
 
-s=''
-for i in range(len(all_postures)):
-    s+=all_postures[i]+' '
+
 
 def time_warp(sequence):
     e = ''
@@ -24,16 +22,30 @@ def time_warp(sequence):
             e = i
             
     return ' '.join(l)
+    
+sequence=''
+for i in range(len(all_postures)):
+    sequence+=all_postures[i]+' '
+
+#have a look at all the postures:
+def simplify(all_postures):
+    Sequence = sequence.split(' ')
+        
+    Sequence = [x for x in Sequence if x != '']
+    
+    Sequence = ' '.join(Sequence)
+        
+    return time_warp(Sequence)
 
 def n_grams(sequence, n):
     """ 
     Input:
-      sequence - a numpy array to be compressed
-      n           - the n in n-grams (also the number of columns in output nGrams)
+      sequence - numpy array: a numpy array to be compressed
+      n        - int: the n in n-grams (also the number of columns in output nGrams)
      
       Output
-        nGrams  - a len(dataVec)-(n+1) by n array containing all the n-grams in dataVec  
-        nGram_seq  - a len(dataVec)-(n+1) by n array containing all the n-grams in dataVec
+        nGrams  - list: a len(dataVec)-(n+1) by n list containing all the n-grams in dataVec  
+        nGram_seq  - list: a len(dataVec)-(n+1) by n list containing all the n-grams in dataVec
         occurrences - the number of times each unique nGram occurs""" 
         
     nGram_seq = []   
@@ -58,25 +70,27 @@ def n_grams(sequence, n):
 
 #note laplacian smoothing creates errors. Somehow, the sum of probabilities ends up 
 #being greater than 1.
-def calc_prob(sequence,trigram,bigram):
+def calc_prob(sequence,n_gram,nplus_gram):
     #vocab_size is set to 90 for the behavioral_syntax paper
     """ 
     Input:
       sequence - a string of posture changes
-      bigram- a particular bigram in sequence
-      trigram - a particular trigram that starts with the bigram
+      n_gram - a particular ngram 
+      nplus_gram- a particular (n+1)_gram that begins whose first n values 
+                  are those given by n_gram
      
       Output
         prob-the conditional probability that this particular trigram occurs using 
              Laplacian smoothing. Note: Laplacian smoothing actually creates errors. 
-        """ 
+        """
     vocab_size = len(set((sequence.split(' '))))
-  
-    trigrams, x, y, z = n_grams(sequence,3)
     
-    if trigram.split(' ')[0:2] == bigram.split(' '):
-        sub_count = sum({k:v for k,v in trigrams.items() if k.startswith(bigram)}.values())
-        prob = (trigrams.get(trigram)+1)/(sub_count+vocab_size)
+    m = len(nplus_gram.split(' '))
+    nplus_grams, x, y, z = n_grams(sequence,m)
+    
+    if nplus_gram.split(' ')[0:m-1] == n_gram.split(' '):
+        sub_count = sum({k:v for k,v in nplus_grams.items() if k.startswith(n_gram)}.values())
+        prob = (nplus_grams.get(nplus_gram)+1)/(sub_count+vocab_size)
     else:
         prob = 1/vocab_size
     
@@ -95,16 +109,30 @@ def random_distr(l):
     return l[-1]
 
 
-def trigram_probs(sequence,bigram):
+def ngram_probs(sequence,n_gram):
     l = []
     
-    w,x,y,z = n_grams(sequence,3)
+    N = len(n_gram.split(' '))+1
+    
+    w,x,y,z = n_grams(sequence,N)
 
     for i in x:
-        prob = calc_prob(sequence,i,bigram)
-        terminal = i.split(' ')[2]
-        l.append([terminal,prob])
+        if i.split(' ')[0:N-1] == n_gram.split(' '):
+            prob = calc_prob(sequence,n_gram,i)
+            terminal = i.split(' ')[N-1]
+            l.append([terminal,prob])
+            
+    #create the complete reference set of possible n_grams:
+    n_gram_list = [list(i) for i in list(itertools.permutations(list(range(90)), N))]
+    n_gram_list = [[str(j) for j in i] for i in n_gram_list]
+    n_gram_list = [' '.join(i) for i in n_gram_list]
         
+    sub_alpha = [l[i][0] for i in range(len(l))]
+    diff = [x for x in n_gram_list if x not in sub_alpha]
+    for i in diff:
+        terminal = i.split(' ')[N-1]
+        l.append([terminal,float(1/90)])
+    
     return l
     
 #simulate new sequence:
@@ -119,12 +147,14 @@ def sim_seq(N,sequence,initial_conditions):
         """ 
     #arr = list(np.zeros(100))
     #arr[0:2] = ['z','6']
+    n = len(initial_conditions.split(' '))
+        
     arr = list(np.zeros(N))
-    arr[0:2] = initial_conditions.split(' ')
+    arr[0:n] = initial_conditions.split(' ')
     
     for i in range(2,len(arr)):
-        bigram = ' '.join(arr[i-2:i])
-        l = trigram_probs(sequence,bigram)
+        bigram = ' '.join(arr[i-n:i])
+        l = ngram_probs(sequence,bigram)
         arr[i] = random_distr(l)
     
     simulated_seq = ' '.join(arr)
