@@ -1,17 +1,23 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Sep  1 12:41:16 2015
-
-@author: macbook
-"""
-
 import matplotlib.pyplot as plt
 from math import sqrt
 from scipy.stats import itemfreq
 import numpy as np
+#for bokeh charts:
+from bokeh.plotting import show, output_file
+from bokeh.charts import Bar
 
+def bokeh_bars(liszt):
+    
+    z = itemfreq(liszt)
+    z = z[np.argsort(z[:,1])]
 
-
+    data = {"y": list(z[:,1])}
+    
+    bar = Bar(data, list(map(str,z[:,0])), title="bars")
+    
+    output_file("color_scatter.html", title="postures MDS")
+    
+    show(bar)
 
 plt.style.use('ggplot')
 
@@ -35,7 +41,10 @@ def grid_plot(list,kind,image_loc,image_name):
         j = 0
         for i in range(N):
             z = itemfreq(list[j])
-            ax[i].plot(z[:,0],z[:,1],'o')
+            z = z[np.argsort(z[:,1])]
+            ax[i].plot(z[:,1],'o')
+            ax[i].set_xticks(z[:,1])
+            #ax[i].plot(z[:,0],z[:,1],'o')
             ax[i].set_title(str(j),size='medium',weight='bold',color='steelblue',backgroundcolor=(1,  0.85490196,  0.7254902))
             j+=1
             
