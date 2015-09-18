@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Sep  1 12:41:16 2015
+
+@author: macbook
+"""
+
 import matplotlib.pyplot as plt
 from math import sqrt
 from scipy.stats import itemfreq
@@ -10,10 +17,10 @@ def bokeh_bars(liszt):
     
     z = itemfreq(liszt)
     z = z[np.argsort(z[:,1])]
-
     data = {"y": list(z[:,1])}
     
-    bar = Bar(data, list(map(str,z[:,0])), title="bars")
+    #it would be great if there was a way to automatically fit the bokeh plot to the screen: 
+    bar = Bar(data, list(map(str,z[:,0])), title="bars",width=1000,height=500)
     
     output_file("color_scatter.html", title="postures MDS")
     
