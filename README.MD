@@ -1,3 +1,6 @@
+.. image:: https://api.travis-ci.org/AidanRocke/behavioral_syntax.svg?branch=master
+    :target: https://travis-ci.org/AidanRocke/behavioral_syntax/
+
 #briefly:
 1. This is the Python 3 implementation of Andre Brown's behavioral syntax code: https://github.com/aexbrown/Behavioural_Syntax
 2. But, the ultimate goal of this project is to define the benefits as well as limitations of the 'behavioral syntax' approach. 
