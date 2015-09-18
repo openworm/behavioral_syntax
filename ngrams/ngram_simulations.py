@@ -20,22 +20,19 @@ def time_warp(sequence):
         if i!=e:
             l.append(i)
             e = i
-            
-    return ' '.join(l)
+    #remove spaces(i.e. ''):
+    Sequence = ' '.join([x for x in l if x != ''])
     
+            
+    return Sequence
+
+    
+
+'''
 sequence=''
 for i in range(len(all_postures)):
     sequence+=all_postures[i]+' '
-
-#have a look at all the postures:
-def simplify(all_postures):
-    Sequence = sequence.split(' ')
-        
-    Sequence = [x for x in Sequence if x != '']
-    
-    Sequence = ' '.join(Sequence)
-        
-    return time_warp(Sequence)
+'''
 
 def n_grams(sequence, n):
     """ 
@@ -121,7 +118,7 @@ def ngram_probs(sequence,n_gram):
             prob = calc_prob(sequence,n_gram,i)
             terminal = i.split(' ')[N-1]
             l.append([terminal,prob])
-            
+    """       
     #create the complete reference set of possible n_grams:
     n_gram_list = [list(i) for i in list(itertools.permutations(list(range(90)), N))]
     n_gram_list = [[str(j) for j in i] for i in n_gram_list]
@@ -131,7 +128,7 @@ def ngram_probs(sequence,n_gram):
     diff = [x for x in n_gram_list if x not in sub_alpha]
     for i in diff:
         terminal = i.split(' ')[N-1]
-        l.append([terminal,float(1/90)])
+        l.append([terminal,float(1/90)])"""
     
     return l
     
