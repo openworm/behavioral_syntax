@@ -1,5 +1,4 @@
-.. image:: https://api.travis-ci.org/AidanRocke/behavioral_syntax.svg?branch=master
-    :target: https://travis-ci.org/AidanRocke/behavioral_syntax/
+[![Build Status](https://travis-ci.org/AidanRocke/behavioral_syntax.svg?branch=master)](https://travis-ci.org/AidanRocke/behavioral_syntax)
 
 #briefly:
 1. This is the Python 3 implementation of Andre Brown's behavioral syntax code: https://github.com/aexbrown/Behavioural_Syntax
