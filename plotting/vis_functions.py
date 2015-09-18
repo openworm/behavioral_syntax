@@ -13,7 +13,7 @@ import numpy as np
 from bokeh.plotting import show, output_file
 from bokeh.charts import Bar
 
-def bokeh_bars(liszt):
+def bokeh_bars(liszt,name):
     
     z = itemfreq(liszt)
     z = z[np.argsort(z[:,1])]
@@ -22,7 +22,7 @@ def bokeh_bars(liszt):
     #it would be great if there was a way to automatically fit the bokeh plot to the screen: 
     bar = Bar(data, list(map(str,z[:,0])), title="bars",width=1000,height=500)
     
-    output_file("color_scatter.html", title="postures MDS")
+    output_file(name+".html", title=name)
     
     show(bar)
 
