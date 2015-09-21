@@ -19,7 +19,7 @@ g = io.loadmat('/Users/cyrilrocke/Documents/c_elegans/data/postures')
 postures = g.get('postures')
 plt.style.use('ggplot')
 
-def N_postures(sequence,color,title):
+def N_postures(sequence,color,title,image_loc,image_name):
     sequence = list(sequence)
     mean_angles = np.zeros(90)
     
@@ -45,6 +45,11 @@ def N_postures(sequence,color,title):
         axes[j].set_title(str(j),size='medium',weight='bold',color='steelblue',backgroundcolor=(1,  0.85490196,  0.7254902))
         axes[j].axis('off')
         j+=1
+    
+    #save to file only if that's what you actually want 
+    if isinstance(image_loc+image_name,str):
+        fig.savefig(image_loc+image_name+'.png',dpi=fig.dpi)
+        
 
 def bokeh_bars(liszt,name):
     
@@ -96,6 +101,6 @@ def grid_plot(list,kind,image_loc,image_name):
             j+=1
         
     
-    
-    fig.savefig(image_loc+image_name+'.png',dpi=fig.dpi)
+    if isinstance(image_loc+image_name,str):
+        fig.savefig(image_loc+image_name+'.png',dpi=fig.dpi)
     
