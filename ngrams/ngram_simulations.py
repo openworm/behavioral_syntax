@@ -28,11 +28,12 @@ def time_warp(sequence):
 
     
 
-'''
+
 sequence=''
 for i in range(len(all_postures)):
     sequence+=all_postures[i]+' '
-'''
+
+sequence = time_warp(sequence)
 
 def n_grams(sequence, n):
     """ 
@@ -86,10 +87,14 @@ def calc_prob(sequence,n_gram,nplus_gram):
     nplus_grams, x, y, z = n_grams(sequence,m)
     
     if nplus_gram.split(' ')[0:m-1] == n_gram.split(' '):
-        sub_count = sum({k:v for k,v in nplus_grams.items() if k.startswith(n_gram)}.values())
-        prob = (nplus_grams.get(nplus_gram)+1)/(sub_count+vocab_size)
+        if isinstance(nplus_grams.get(nplus_gram),int) == 1:
+            sub_count = sum({k:v for k,v in nplus_grams.items() if k.startswith(n_gram)}.values())
+            prob = (nplus_grams.get(nplus_gram)+1)/(sub_count+vocab_size)
+        else:
+            prob = 0
     else:
-        prob = 1/vocab_size
+        #prob = 1/vocab_size
+        prob = 0
     
     return prob
 
@@ -110,27 +115,34 @@ def ngram_probs(sequence,n_gram):
     l = []
     
     N = len(n_gram.split(' '))+1
-    
+    n_split = n_gram.split(' ')
     w,x,y,z = n_grams(sequence,N)
+    
+    initials = [i.split(' ')[0:N-1] for i in x]
+    terminals = [i.split(' ')[N-1] for i in x]
+    
 
-    for i in x:
-        if i.split(' ')[0:N-1] == n_gram.split(' '):
-            prob = calc_prob(sequence,n_gram,i)
-            terminal = i.split(' ')[N-1]
-            l.append([terminal,prob])
-    """       
-    #create the complete reference set of possible n_grams:
-    n_gram_list = [list(i) for i in list(itertools.permutations(list(range(90)), N))]
-    n_gram_list = [[str(j) for j in i] for i in n_gram_list]
-    n_gram_list = [' '.join(i) for i in n_gram_list]
-        
-    sub_alpha = [l[i][0] for i in range(len(l))]
-    diff = [x for x in n_gram_list if x not in sub_alpha]
-    for i in diff:
-        terminal = i.split(' ')[N-1]
-        l.append([terminal,float(1/90)])"""
+    for i in range(len(initials)):
+        if initials[i] == n_gram.split(' '):
+            prob = calc_prob(sequence,n_gram,x[i])
+            l.append([terminals[i],prob]) 
+            
+    if len(l)< 90:
+        S = set([i[0] for i in l])
+        diff = [str(i) for i in range(90) if S.intersection({str(i)})==set()]
+        for j in diff:
+            nplus_gram = ' '.join([n_split[N-2],j])
+            prob = calc_prob(sequence,n_split[N-2],nplus_gram)
+            if prob > 0:
+                l.append([j,prob])
     
     return l
+'''
+for j in diff:
+    nplus_gram = ' '.join([n_split[N-2],j])
+    prob = calc_prob(sequence,n_split[N-2],nplus_gram)
+    if prob > 0:
+        l.append([j,prob])'''
     
 #simulate new sequence:
 def sim_seq(N,sequence,initial_conditions):
@@ -152,7 +164,7 @@ def sim_seq(N,sequence,initial_conditions):
     for i in range(2,len(arr)):
         bigram = ' '.join(arr[i-n:i])
         l = ngram_probs(sequence,bigram)
-        arr[i] = random_distr(l)
+        arr[i] = random_distr(l)[0]
     
     simulated_seq = ' '.join(arr)
         
