@@ -4,8 +4,10 @@ Created on Tue Sep  1 12:41:16 2015
 
 @author: macbook
 """
+from angle_and_skel import MA2skel
 
 import matplotlib.pyplot as plt
+from number_theory import is_prime, largest_factors
 from math import sqrt
 from scipy.stats import itemfreq
 import numpy as np
@@ -29,20 +31,24 @@ def N_postures(sequence,color,title,image_loc,image_name):
     X,Y = MA2skel(postures.T,mean_angles,1)
     
     N = len(sequence)
-    if N>6:
+    if N>6 and is_prime(N) == 1:
         n = round(sqrt(N))+1
         fig, axes = plt.subplots(ncols=n, nrows=n)
         fig.set_size_inches(n, n)
-    else:
+    elif N<6:
         fig, axes = plt.subplots(ncols=N, nrows=1)
         fig.set_size_inches(N, round(N/2))
+    else:
+        rows,cols = largest_factors(N)
+        fig, axes = plt.subplots(ncols=cols, nrows=rows)
+        
     fig.suptitle(title, fontsize=14, fontweight='bold')
     
     axes = axes.ravel()
     j = 0
     for j in range(len(sequence)):
         axes[j].plot(X[sequence[j]],Y[sequence[j]],color=color,lw=5)
-        axes[j].set_title(str(j),size='medium',weight='bold',color='steelblue',backgroundcolor=(1,  0.85490196,  0.7254902))
+        axes[j].set_title(str(sequence[j]),size='medium',weight='bold',color='steelblue',backgroundcolor=(1,  0.85490196,  0.7254902))
         axes[j].axis('off')
         j+=1
     
