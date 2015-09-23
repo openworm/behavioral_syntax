@@ -6,6 +6,10 @@ Created on Wed Sep 23 08:38:56 2015
 
 #taken from here: http://rosettacode.org/wiki/Miller-Rabin_primality_test#Python
 
+import numpy as np
+
+#primality test:
+
 def _try_composite(a, d, n, s):
     if pow(a, d, n) == 1:
         return False
@@ -43,3 +47,12 @@ def is_prime(n, _precision_for_huge_n=16):
  
 _known_primes = [2, 3]
 _known_primes += [x for x in range(5, 1000, 2) if is_prime(x)]
+
+#get greatest common factors:
+import math
+def largest_factors(n):  
+    L = [(x, n/x) for x in range(1, int(math.sqrt(n))+1) if n % x == 0]
+    difference = [abs(np.diff(i))[0] for i in L]
+    smallest_diff = min([abs(np.diff(i))[0] for i in L])
+    index = difference.index(smallest_diff)
+    return round(max(L[index])),round(min(L[index]))
