@@ -7,8 +7,6 @@ Created on Sat Sep 26 14:41:55 2015
 #duration_distributions
 
 from behavioral_syntax.plotting.vis_functions import grid_plot
-
-
 from scipy.stats import itemfreq
 from matplotlib import pyplot as plt
 from scipy import io

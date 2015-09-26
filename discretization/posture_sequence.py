@@ -30,11 +30,9 @@ def posture_seq(files,directory,postures,start,finish):
                 f = f.get(i)'''
                 
             data = io.loadmat(directory+files[i])
-            X = data['worm']['posture'][0][0][0]['skeleton'][0][0][0][0]
-            Y = data['worm']['posture'][0][0][0]['skeleton'][0][0][0][0]
+            X = data['worm']['posture'][0][0][0]['skeleton'][0][0][0][0].T
+            Y = data['worm']['posture'][0][0][0]['skeleton'][0][0][0][0].T
             
-            X = X.T
-            Y = Y.T
             '''   
             #getting the x and y coordinates:
             X = np.array(f.get('x'))
