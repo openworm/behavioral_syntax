@@ -20,7 +20,9 @@ import h5py
 
 """
 remark: there are no absolute pauses that can be detected with certainty. 
-        just because you've found
+        So we can't say that we have detected pauses unless the raw data
+        confirms that. But, we can say that we can detect insignificant 
+        movement.
         """
 
 directory = '/Users/macbook/Documents/c_elegans/raw_data/on-food-1/'
