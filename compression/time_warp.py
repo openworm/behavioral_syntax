@@ -23,4 +23,6 @@ if __name__ == '__main__':
     import doctest
     doctest.testmod()
 
+def test_answer():
+    assert time_warp('1 2 3 4 5 5 2 3 3'.split(' ')) == 5
 
