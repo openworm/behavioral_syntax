@@ -8,7 +8,7 @@ Created on Sun Jul 19 07:28:51 2015
 def time_warp(ts):
     """
     >>> time_warp('1 2 3 4 5 5 2 3 3'.split(' '))
-    ['1', '2', '3', '4', '5', '2', '3']
+    '1', '2', '3', '4', '5', '2', '3']
     """
     result = []
     most_recent_elem = None
