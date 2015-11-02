@@ -1,8 +1,7 @@
-import behavioral_syntax as b_s
 import numpy as np
 
-from b_s.compression import time_warp as tw
-from b_s.utilities import dynamic_time_warp as dtw
+from behavioral_syntax.compression import time_warp as tw
+from behavioral_syntax.utilities import dynamic_time_warp as dtw
 
 A = np.array([[ 0.7696172 ,  0.78793319,  0.28336053],
        [ 0.24157021,  0.79534655,  0.14525486],
