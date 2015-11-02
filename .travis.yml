@@ -6,9 +6,13 @@ before_install:
     - pip install nose
     
 script:
-    - py.test /compression
+    - py.test 
     - pwd
     - nosetests --nocapture
+    
+# Calculate coverage
+after_success:
+  - coveralls --config_file .coveragerc
     
 notifications:
   email: false
