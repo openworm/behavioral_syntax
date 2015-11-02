@@ -5,3 +5,11 @@ before_install:
     - pip install pytest pytest-cov
 script:
     - py.test
+    
+
+install:  
+  - pip install python-coveralls  # Add me to install python-coveralls
+script:  
+  - python setup.py install
+after_success:  
+  - coveralls                     # Add me to upload reports to coveralls.io
