@@ -5,6 +5,6 @@ before_install:
     - pip install pytest pytest-cov
 script:
     - py.test
-    - python -m doctest -v doctest_simple.py
+    - python time_warp.py
     
 
