@@ -3,8 +3,8 @@ python:
     - "3.4"
 before_install:
     - pip install pytest pytest-cov
+    - pip install doctest
 script:
     - py.test
-    - python -m doctest -v behavioral_syntax.compression.time_warp.py
     
 
