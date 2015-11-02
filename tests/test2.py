@@ -14,5 +14,5 @@ B = np.array([[ 0.16536915,  0.593412  ,  0.71047034],
 
 def test_answer():
     assert tw.time_warp('1 2 3 4 5 5 2 3 3'.split(' ')) == ['1', '2', '3', '4', '5', '2', '3']
-    assert dtw(A,B) == 1.64
+    assert dtw.DTW(A,B) == 1.64
     #assert dtw(A,B) == 1.626742841248932
