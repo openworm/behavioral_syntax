@@ -4,9 +4,13 @@ python:
 before_install:
     - pip install pytest pytest-cov
     - pip install nose
+    
 script:
     - py.test
     - pwd
     - nosetests --nocapture
+    
+notifications:
+  email: false
     
 
