@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/AidanRocke/behavioral_syntax.svg?branch=master)](https://travis-ci.org/AidanRocke/behavioral_syntax)
 
+[![Coverage Status](https://coveralls.io/repos/AidanRocke/behavioral_syntax/badge.svg?branch=master&service=github)](https://coveralls.io/github/AidanRocke/behavioral_syntax?branch=master)
+
 #briefly:
 1. This is the Python 3 implementation of Andre Brown's behavioral syntax code: https://github.com/aexbrown/Behavioural_Syntax
 2. But, the ultimate goal of this project is to define the benefits as well as limitations of the 'behavioral syntax' approach. 
