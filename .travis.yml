@@ -21,7 +21,6 @@ install:
     # Coverage packages are on my binstar channel
     - which python
     - python --version
-    - python setup.py install
     
 script:
   - py.test 
