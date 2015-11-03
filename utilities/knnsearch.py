@@ -1,5 +1,3 @@
-#@author: aidanrocke
-
 import numpy as np
 from scipy import io
 
@@ -19,15 +17,15 @@ def knnsearch(angles,postures):
     #initialize Vars and posture_sequence:
     C = len(angles)
     posture_sequence = np.zeros(C)
-    dist_Vec = np.zeros(C)
+    distance_vector = np.zeros(C)
     
     for i in range(C):
         distances = [np.inf]*90
         for j in range(90):
             distances[j] = np.linalg.norm(angles[i]-postures[:,j])
         val = min(distances)
-        dist_Vec[i] = val
+        distance_vector[i] = val
         posture_sequence[i] = distances.index(val)
     
     #collect features
-    return posture_sequence, dist_Vec
+    return posture_sequence, distance_vector
