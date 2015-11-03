@@ -36,5 +36,5 @@ def decision_rule(prev,inc,delta):
     
     while mean_r_sq(prev+inc)[0]-mean_r_sq(prev)[0] > delta:
         prev = prev+inc
-        output = mean_r_sq(prev)
-    return output
+        variance,centroids,labels = mean_r_sq(prev)
+    return variance,centroids,labels
