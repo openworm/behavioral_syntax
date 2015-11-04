@@ -2,7 +2,7 @@
 """
 Created on Sat Sep 26 14:41:55 2015
 
-@author: aidanrocke99
+@author: aidanrocke
 """
 #duration_distributions
 
