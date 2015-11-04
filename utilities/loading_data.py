@@ -8,16 +8,12 @@ def loading_data(filepath):
   f = h5py.File(filepath)
   
   #getting the right cell array:
-  l1 = f.get('worm')
-  
-  l2 = l1.get('posture')
-  
-  l3 = l2.get('skeleton')
+  for i in ['worm','posture','skeleton']:
+                f = f.get(i)
   
   #getting the x and y coordinates:
-  X = l3.get('x')
-  
-  Y = l3.get('y')
+  X = np.array(f.get('x'))
+  Y = np.array(f.get('y'))
   
   angleArray, meanAngles = angle(X,Y)
   
