@@ -1,6 +1,15 @@
 import numpy as np
 import pandas as pd
 
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Nov  5 16:16:01 2015
+
+@author: aidanrocke
+"""
+import numpy as np
+import pandas as pd
+
 sequence = '1 2 3 4 2 3 z 6 c 1 2 3 4 2 3 z 6 1 1 1 1 a b 1 1 1 1'
 
 def subsequences(posture_seq, n):
@@ -29,6 +38,7 @@ def subsequences(posture_seq, n):
     for i in range(len(posture_seq)-n+1):
       g = ' '.join(posture_seq[i:i+n])
       nGram_seq.append(g)
+      locations.append([i,i+n])
       locations.append(list(range(i,i+n+1)))
       output[g] = Z.count(g)
     
@@ -44,3 +54,21 @@ def subsequences(posture_seq, n):
     df.locations = locations
     
     return df[df['sequences'].isin(non_triv)]
+    
+def add_rule(sequence):
+    k = int(len(sequence.split(' '))/2)
+    i = 0
+    output = {}
+    while k > 2:
+        data = subsequences(sequence,k)
+        counts = data['sequences'].value_counts()
+        if len(counts) > 0 and counts[0] > 1:
+            new_rule = counts.index[0]
+            sequence = sequence.replace(new_rule,'A'+str(i))
+            output['A'+str(i)] = new_rule
+            k = int(len(sequence.split(' '))/2)
+            i+=1
+        else:
+            k-=1
+    
+    return sequence, output, pd.DataFrame.from_dict(data=output,orient='index')
