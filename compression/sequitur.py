@@ -1,6 +1,3 @@
-import numpy as np
-import pandas as pd
-
 # -*- coding: utf-8 -*-
 """
 Created on Thu Nov  5 16:16:01 2015
@@ -39,7 +36,6 @@ def subsequences(posture_seq, n):
       g = ' '.join(posture_seq[i:i+n])
       nGram_seq.append(g)
       locations.append([i,i+n])
-      locations.append(list(range(i,i+n+1)))
       output[g] = Z.count(g)
     
     nGrams = np.array(list(output.keys()))
@@ -55,7 +51,7 @@ def subsequences(posture_seq, n):
     
     return df[df['sequences'].isin(non_triv)]
     
-def add_rule(sequence):
+def rules(sequence):
     k = int(len(sequence.split(' '))/2)
     i = 0
     output = {}
@@ -72,3 +68,5 @@ def add_rule(sequence):
             k-=1
     
     return sequence, output, pd.DataFrame.from_dict(data=output,orient='index')
+    
+#,orient='index'
