@@ -66,7 +66,23 @@ def rules(sequence):
             i+=1
         else:
             k-=1
+            
+    df = pd.DataFrame.from_dict(data=output,orient='index')
+    N = len(df)
+            
+    for i in range(N):
+        i = 0
+        old = df.ix[i][0]
+        new = df.index[i]
+ 
+        labels = [df.ix[j][0] for j in range(N)]
+        #update df:
+        modified = labels[0:i+1]+[j.replace(old,new) for j in labels[i+1:N]]
+        df = pd.DataFrame(modified,index = df.index)
+            
+    return sequence, output, df
     
-    return sequence, output, pd.DataFrame.from_dict(data=output,orient='index')
+
     
-#,orient='index'
+            
+ 
