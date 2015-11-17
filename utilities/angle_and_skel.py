@@ -8,7 +8,9 @@ def get_true(array):
     indices = [i for i, x in enumerate(array) if x]
     return indices
 
-def angle(x, y):
+def angle(val):
+    
+    x, y = val
 
     """MAKEANGLEARRAY Get tangent angles for each frame of normBlocks and rotate
                    to have zero mean angle
@@ -30,7 +32,8 @@ def angle(x, y):
     
     indices = [j for j in range(len(x)) if np.sum(np.isnan(x[j]))== 0]
     
-    x,y = x[indices], y[indices]
+    x = x[indices]
+    y = y[indices]
     
     [numFrames, lengthX] = np.shape(x)
     
@@ -40,7 +43,6 @@ def angle(x, y):
     
     
     for i in range(numFrames):
-        
         # calculate the x and y differences
         dX = np.diff(x[i], n=1, axis=0)
         dY = np.diff(y[i], n=1, axis=0)
@@ -48,6 +50,7 @@ def angle(x, y):
         # calculate tangent angles.  atan2 uses angles from -pi to pi instead...
         # of atan which uses the range -pi/2 to pi/2.
         angles = np.arctan2(dY, dX)
+        angleArray[i] = angles
         
         # need to deal with cases where angle changes discontinuously from -pi
         # to pi and pi to -pi.  In these cases, subtract 2pi and add 2pi
@@ -58,25 +61,27 @@ def angle(x, y):
         # find discontinuities larger than pi (skeleton cannot change direction
         # more than pi from one segment to the next)
         #1 to cancel diff
-        
+        '''
         positiveJumps = np.array(get_true(np.diff(angles, n=1, axis=0) > 5))+1
         negativeJumps = np.array(get_true(np.diff(angles, n=1, axis=0) < -5))+1 
         
         # subtract 2pi from remainging data after positive jumps
-        for j in positiveJumps:
-            angles[j:] = angles[j:] - 2*math.pi
+        if len(positiveJumps>0):
+            for j in positiveJumps:
+                angles[j:] = angles[j:] - 2*math.pi
         
         # add 2pi to remaining data after negative jumps
-        for j in negativeJumps:
-            angles[j:] = angles[j:] + 2*math.pi
+        if len(negativeJumps>0):
+            for j in negativeJumps:
+                angles[j:] = angles[j:] + 2*math.pi
         
         # rotate skeleton angles so that mean orientation is zero
-        meanAngle = np.mean(angles)
-        meanAngles[i] = meanAngle
-        angles -= meanAngle
+        
+        meanAngles[i] = np.mean(angles)
+        angles -= meanAngles[i]
         
         # append to angle array
-        angleArray[i] = angles
+        angleArray[i] = angles'''
         
     return angleArray, meanAngles
 

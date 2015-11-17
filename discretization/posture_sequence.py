@@ -17,7 +17,7 @@ postures = g.get('postures')
 all_postures = []
 
 
-def posture_seq(files,directory,postures,start,finish):
+def posture_seq(directory,postures,start,finish):
     #I may not always want to be limited to 90 postures. 
     num_postures = len(postures)
     
