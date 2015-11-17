@@ -3,7 +3,9 @@ import os
 from scipy import io
 import h5py
 
-#directory = '/Users/cyrilrocke/Documents/c_elegans/data/'
+from behavioral_syntax.utilities.loading_data import loading_data
+
+#directory = '/Users/cyrilrocke/Documents/c_elegans/data/raw_data/'
 #files = os.listdir(directory+'/test1/20_videos')
 
 g = io.loadmat('/Users/cyrilrocke/Documents/c_elegans/data/postures')
@@ -13,6 +15,7 @@ postures = g.get('postures')
 #pos_y = np.load(directory+'/test1/features/pos_y.npy')
 
 all_postures = []
+
 
 def posture_seq(files,directory,postures,start,finish):
     #I may not always want to be limited to 90 postures. 
@@ -49,7 +52,7 @@ def posture_seq(files,directory,postures,start,finish):
         
             #get angles for the skeletons
                 angles, m_a = angle(X,Y)
-                X, Y = MA2skel(angles, m_a, 1)
+                #X, Y = MA2skel(angles, m_a, 1)
                 
                 #initialize Vars and posture_sequence:
                 #Vars = np.zeros(len(X))

@@ -28,7 +28,9 @@ def angle(x, y):
                         of the video."""
     
     
+    indices = [j for j in range(len(x)) if np.sum(np.isnan(x[j]))== 0]
     
+    x,y = x[indices], y[indices]
     
     [numFrames, lengthX] = np.shape(x)
     
@@ -82,9 +84,9 @@ def angle2skel(angle,mean_angle,arclength,numAngles):
     """Input:
         angleArray - a numSkelPoints - 1 by numFrames array of skeleton
                      tangent angles
-      mean_angle - the average value of angleArray
-      arclength  - the total arc length of the skeleton to be reconstructed
-      numAngles  - the length of the angleArray"""
+        mean_angle - the average value of angleArray
+        arclength  - the total arc length of the skeleton to be reconstructed
+        numAngles  - the length of the angleArray"""
 
     
     angle = angle + mean_angle
