@@ -11,16 +11,18 @@ Created on Wed Nov 18 20:40:43 2015
 #each posture. 
 import numpy as np
 import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.style.use('ggplot')
 
 
 
-
-def posture_probability(sequence,posture,window):
+def posture_probability(sequence,window):
     """a function that is used to plot the probability of a posture after
     x mins have passed in a given environment. We use 3 minute time intervals.
     
     INPUTS:
-    sequence: the posture sequence #array
+    sequence: the posture sequence #list
     window:  length of the counting intervals #integer
     
     OUTPUTS:
@@ -30,16 +32,32 @@ def posture_probability(sequence,posture,window):
     #initialize matrix:
     matrix = np.zeros((90,N))
     
+    #checking the probability that a posture occurs at a particular time. 
     for i in range(90):
-        matrix[i] = [sequence[j:j+window].count(i) for j in range(len(sequence)-window+1)] 
+        matrix[i] = [sequence[j:j+window].count(i) for j in range(N-window+1)]    
+    
+    for i in range(N-window+1):
+        if sum(matrix[:,i])>0:
+            matrix[:,i] = matrix[:,i]/sum(matrix[:,i])
+            
+        plt.figure()
+        plt.hist(matrix[i])
         
-    if sum(matrix[i])>0:
-        matrix[i] = matrix[i]/sum(matrix[i])
+    #checking the probability that a 
+        
         
     sns.heatmap(matrix,xticklabels=window)
     
     return matrix
     
+
+
+
+    
+        
+    
+
+
     
     
     
