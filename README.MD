@@ -7,6 +7,7 @@
 2. But, the ultimate goal of this project is to define the benefits as well as limitations of the 'behavioral syntax' approach. 
 3. As such, the completed project will include statistical tests that will serve to determine whether the available movement data is amenable to a 'behavioral syntax' analysis. 
 4. For more information please consult the wiki.
+5. continous_models are included to compare with the findings of the discrete approach. 
 
 
 ### Main functions:
@@ -17,7 +18,7 @@ adjacent duplicates. i.e. {3,4,4,5,75,75,6,6,6} = {3,45,75,6}
 4. After step 3 is done, all kinds of NLP methods(ex. trigrams) or bio-informatic methods for discrete sequences of data may be used. 
 
 ##### Example of a template with 90 postures extracted using Kmeans++:
-![hr] (https://raw.githubusercontent.com/AidanRocke/behavioral_syntax/master/90_postures.png)
+![hr] (https://raw.githubusercontent.com/AidanRocke/behavioral_syntax/master/data/90_postures.png)
 
 ##### Visualizing the tangent angle distance between postures:
-![hr] (https://github.com/AidanRocke/behavioral_syntax/blob/master/bokeh_postures_mds.png)
+![hr] (https://github.com/AidanRocke/behavioral_syntax/blob/master/data/bokeh_postures_mds.png)
