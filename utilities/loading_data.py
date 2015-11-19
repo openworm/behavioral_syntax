@@ -1,8 +1,11 @@
 from behavioral_syntax.utilities.angle_and_skel import angle
 import numpy as np
 import scipy, h5py
+import os
 
 #filepath = 'C:/Users/ltopuser/behavioral_syntax/utilities/data.mat'
+
+direc = '/Users/cyrilrocke/Documents/c_elegans/data/off_food/'
 
 def get_skeletons(file):
     """get sequence of skeletons from a particular file"""
@@ -52,18 +55,19 @@ def loading_data(directory,sampling_fraction):
         
     skeletons = [get_skeletons(files[i]) for i in range(len(files))]
     
-    angle_data = [angle(x,y=skeletons[i]) for i in range(len(skeletons))]
+
+    
+    angle_data = [angle(skeletons[i]) for i in range(len(skeletons))]
     
     #angleArray, meanAngles = angle(X,Y)
+    #return angleArray, meanAngles
+    
+    return angle_data
   
-  '''
-  #save data
-  scipy.io.savemat('angleArray.mat', dict(x=angleArray))
-  scipy.io.savemat('meanAngles.mat', dict(y=meanAngles))'''
-  
-  #return angleArray, meanAngles
-  
-  return angle_data
+'''
+#save data
+scipy.io.savemat('angleArray.mat', dict(x=angleArray))
+scipy.io.savemat('meanAngles.mat', dict(y=meanAngles))'''
 
 ''''
 def dict_generator(filepath, pre=None):

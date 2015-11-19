@@ -3,6 +3,8 @@ import os
 from scipy import io
 import h5py
 
+from behavioral_syntax.utilities.angle_and_skel import angle
+
 from behavioral_syntax.utilities.loading_data import loading_data
 
 #directory = '/Users/cyrilrocke/Documents/c_elegans/data/raw_data/'
