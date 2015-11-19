@@ -7,16 +7,6 @@ import math
 def get_true(array):
     indices = [i for i, x in enumerate(array) if x]
     return indices
-    
-f = lambda array : [i for i, x in enumerate(array) if x]
-
-#f(1,1) = 2
-
-g = lambda x, y : np.sin(x) + y
-
-#g(0,1) = 1
-
-r = map(func, seq)
 
 def angle(val):
     
