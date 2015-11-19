@@ -19,7 +19,7 @@ plt.style.use('ggplot')
 
 def posture_probability(sequence,window):
     """a function that is used to plot the probability of a posture after
-    x mins have passed in a given environment. We use 3 minute time intervals.
+    x mins have passed in a given environment. 
     
     INPUTS:
     sequence: the posture sequence #list
