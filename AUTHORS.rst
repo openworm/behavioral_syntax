@@ -1,5 +1,4 @@
 Authors
 -------
 
-* Eric (New contributor)
-* Anthony 
+* Aidan
