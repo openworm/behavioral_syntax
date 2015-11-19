@@ -7,6 +7,16 @@ import math
 def get_true(array):
     indices = [i for i, x in enumerate(array) if x]
     return indices
+    
+f = lambda array : [i for i, x in enumerate(array) if x]
+
+#f(1,1) = 2
+
+g = lambda x, y : np.sin(x) + y
+
+#g(0,1) = 1
+
+r = map(func, seq)
 
 def angle(val):
     
@@ -50,7 +60,7 @@ def angle(val):
         # calculate tangent angles.  atan2 uses angles from -pi to pi instead...
         # of atan which uses the range -pi/2 to pi/2.
         angles = np.arctan2(dY, dX)
-        angleArray[i] = angles
+        #angleArray[i] = angles
         
         # need to deal with cases where angle changes discontinuously from -pi
         # to pi and pi to -pi.  In these cases, subtract 2pi and add 2pi
@@ -61,9 +71,11 @@ def angle(val):
         # find discontinuities larger than pi (skeleton cannot change direction
         # more than pi from one segment to the next)
         #1 to cancel diff
-        '''
-        positiveJumps = np.array(get_true(np.diff(angles, n=1, axis=0) > 5))+1
-        negativeJumps = np.array(get_true(np.diff(angles, n=1, axis=0) < -5))+1 
+        diffs = np.diff(angles, n=1, axis=0)
+        #z1 = diffs > 5
+        #z2 = diffs < -5
+        positiveJumps = np.array(get_true(diffs > 5))+1
+        negativeJumps = np.array(get_true(diffs < -5))+1 
         
         # subtract 2pi from remainging data after positive jumps
         if len(positiveJumps>0):
@@ -81,7 +93,7 @@ def angle(val):
         angles -= meanAngles[i]
         
         # append to angle array
-        angleArray[i] = angles'''
+        angleArray[i] = angles
         
     return angleArray, meanAngles
 
