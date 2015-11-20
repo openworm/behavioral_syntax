@@ -17,8 +17,9 @@ from bokeh.plotting import show, output_file
 from bokeh.charts import Bar
 
 #visualizing postures is probably one of the most important tasks:
-g = io.loadmat('/Users/cyrilrocke/Documents/c_elegans/data/postures')
-postures = g.get('postures')
+postures_mat = io.loadmat('/Users/cyrilrocke/behavioral_syntax/data/postures')
+postures = postures_mat.get('postures')
+
 plt.style.use('ggplot')
 
 def N_postures(sequence,color,title,image_loc,image_name):
@@ -58,7 +59,7 @@ def N_postures(sequence,color,title,image_loc,image_name):
         
 
 def bokeh_bars(liszt,name):
-    
+    """this gives an interactive bar chart plot"""
     z = itemfreq(liszt)
     z = z[np.argsort(z[:,1])]
     data = {"y": list(z[:,1])}
