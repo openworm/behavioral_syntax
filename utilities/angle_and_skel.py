@@ -93,7 +93,11 @@ def angle2skel(angle,mean_angle,arclength,numAngles):
                      tangent angles
         mean_angle - the average value of angleArray
         arclength  - the total arc length of the skeleton to be reconstructed
-        numAngles  - the length of the angleArray"""
+        numAngles  - the length of the angleArray
+
+        Output:
+        skelX - the arrays of X values for a sequence of skeletons
+        skelY - the arrays of Y values for a sequence of skeletons"""
 
     
     angle = angle + mean_angle
