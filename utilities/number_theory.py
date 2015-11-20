@@ -49,9 +49,8 @@ _known_primes = [2, 3]
 _known_primes += [x for x in range(5, 1000, 2) if is_prime(x)]
 
 #get greatest common factors:
-import math
 def largest_factors(n):  
-    L = [(x, n/x) for x in range(1, int(math.sqrt(n))+1) if n % x == 0]
+    L = [(x, n/x) for x in range(1, int(np.sqrt(n))+1) if n % x == 0]
     difference = [abs(np.diff(i))[0] for i in L]
     smallest_diff = min([abs(np.diff(i))[0] for i in L])
     index = difference.index(smallest_diff)

@@ -5,8 +5,6 @@ Created on Mon Nov  2 15:55:25 2015
 """
 
 #taken from here: http://jeremykun.com/2012/07/25/dynamic-time-warping/
-
-import math
 import numpy as np
  
 def DTW(seqA, seqB, d = lambda x,y: np.linalg.norm(x-y)):

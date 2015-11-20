@@ -1,5 +1,4 @@
 from matplotlib import pyplot as plt
-import math
 import numpy as np
 
 def plotGrammarSequence(gExp, postures, sequenceInds):
@@ -25,7 +24,7 @@ def plotGrammarSequence(gExp, postures, sequenceInds):
         plt.figure(1)
         for j in range(len(currentSeq)):
             # convert the current matching posture to xy-coordinates
-            x, y = angle2skel(postures(currentSeq[j])-math.pi/2, arclength)
+            x, y = angle2skel(postures(currentSeq[j])-np.pi/2, arclength)
             
             #plot the matching posture over the original skeleton
             plt.plot(x - np.mean(x) + j * offsetFactor, y - np.mean(y), 'r', lw = 3)

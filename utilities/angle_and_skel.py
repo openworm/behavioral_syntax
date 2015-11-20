@@ -1,5 +1,4 @@
 import numpy as np
-import math
 
 #in this script is contained the angle function, the angle to skeleton function(angle2skel)
 #and the many angles to many skeletons function(MA2skel). 
@@ -70,12 +69,12 @@ def angle(val):
         # subtract 2pi from remainging data after positive jumps
         if len(positiveJumps>0):
             for j in positiveJumps:
-                angles[j:] = angles[j:] - 2*math.pi
+                angles[j:] = angles[j:] - 2*np.pi
         
         # add 2pi to remaining data after negative jumps
         if len(negativeJumps>0):
             for j in negativeJumps:
-                angles[j:] = angles[j:] + 2*math.pi
+                angles[j:] = angles[j:] + 2*np.pi
         
         # rotate skeleton angles so that mean orientation is zero
         
@@ -102,8 +101,8 @@ def angle2skel(angle,mean_angle,arclength,numAngles):
     
     angle = angle + mean_angle
 
-    cos = np.array([math.cos(i) for i in angle])
-    sin = np.array([math.sin(i) for i in angle])
+    cos = np.array([np.cos(i) for i in angle])
+    sin = np.array([np.sin(i) for i in angle])
     
     # add up x-contributions of angleArray, rotated by meanAngle
     skelX = np.hstack((np.array(0),np.cumsum(cos)*arclength/numAngles))
