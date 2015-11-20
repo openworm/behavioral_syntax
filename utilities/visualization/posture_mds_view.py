@@ -4,8 +4,7 @@ from bokeh.plotting import figure, output_file, show
 from bokeh.models import Range1d
 
 from scipy import io
-import numpy as np
-from bokeh.plotting import figure, show, output_file
+from sklearn import manifold
 from sklearn.metrics import euclidean_distances
 
 #this allows us to view the tangent angle distance between postures which 
