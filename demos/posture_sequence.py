@@ -1,7 +1,8 @@
+#!usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import numpy as np
-
 import scipy, h5py
-
 from matplotlib import pyplot as plt
 
 from simple_compression import simple_compression
