@@ -1,5 +1,10 @@
+#!usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
 import numpy as np
 
+sys.path.append('../..')
 from behavioral_syntax.compression import time_warp as tw
 from behavioral_syntax.metrics import dynamic_time_warp as dtw
 
