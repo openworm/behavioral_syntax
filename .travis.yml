@@ -3,25 +3,39 @@
 
 language: python
 python:
-    - "3.4"
+  - 2.7
+  - 3.3
+  - 3.4
+  - 3.5
+notifications:
+  email: false
+
 before_install:
-    #- sudo: false  ...this is supposed to allow travis to run the build on new 'containers'
-    - pip install pytest pytest-cov
-    - pip install nose
-    - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
-    - chmod +x miniconda.sh
-    - ./miniconda.sh -b
-    - export PATH=/home/travis/miniconda/bin:$PATH
-   # - conda update --yes conda
-    # The next couple lines fix a crash with multiprocessing on Travis and are not specific to using Miniconda
-    - sudo rm -rf /dev/shm
-    - sudo ln -s /run/shm /dev/shm
+  #- sudo: false  ...this is supposed to allow travis to run the build on new 'containers'
+  - pip install pytest pytest-cov
+  - pip install nose
+  - |
+      if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]]; then 
+        MINICONDA_DIR=/home/travis/miniconda2
+        wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
+      else
+        MINICONDA_DIR=/home/travis/miniconda3
+        wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+      fi
+  - chmod +x miniconda.sh
+  - ./miniconda.sh -b
+  - export PATH=$MINICONDA_DIR/bin:$PATH
+  # - conda update --yes conda
+  # The next couple lines fix a crash with multiprocessing on Travis 
+  # and are not specific to using Miniconda
+  - sudo rm -rf /dev/shm
+  - sudo ln -s /run/shm /dev/shm
     
 install:
-    - conda install --yes python=$TRAVIS_PYTHON_VERSION atlas numpy scipy matplotlib nose dateutil pandas statsmodels
-    # Coverage packages are on my binstar channel
-    - which python
-    - python --version
+  - conda install --yes python=$TRAVIS_PYTHON_VERSION atlas numpy scipy matplotlib nose pandas statsmodels
+  # Coverage packages are on my binstar channel
+  - which python
+  - python --version
     
 script:
   - py.test 
@@ -32,8 +46,6 @@ script:
 #after_success:
 #  - coveralls --config_file .coveragerc
     
-notifications:
-  email: false
  
     
 
