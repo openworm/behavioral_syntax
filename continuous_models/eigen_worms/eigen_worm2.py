@@ -18,12 +18,18 @@ from scipy.io import loadmat
 
 #raw = loadmat('/Users/cyrilrocke/Documents/c_elegans/data/raw_data/N2 on food L_2009_11_19__12_47_47___4___7_features.mat')
 
-#postures = loadmat('/Users/cyrilrocke/behavioral_syntax/data/postures.mat')
+postures = loadmat('/Users/cyrilrocke/behavioral_syntax/data/postures.mat')
 
 #pos = postures.get('postures')
+import os
 
-x,y = loading_data.get_skeletons('/Users/cyrilrocke/Documents/c_elegans/data/raw_data/N2 on food L_2009_11_19__12_47_47___4___7_features.mat')
+files = os.listdir('/Users/cyrilrocke/Documents/c_elegans/data/raw_data/')
+#angles = angles[0]
 
+for i in range(1):
+    x,y = loading_data.get_skeletons('/Users/cyrilrocke/Documents/c_elegans/data/raw_data/N2 on food L_2009_11_19__12_47_47___4___7_features.mat')
+    #angles2 = angle_and_skel.angle((x,y))[0]
+    #angles = np.vstack((angles,angles2))
 
 
 #rho, pval = spearmanr(pos)
@@ -58,35 +64,37 @@ plt.plot(x2,y2,'steelblue')"""
 #looking at more angles:
 angles = angle_and_skel.angle((x,y))
 
-covar = np.cov(np.transpose(angles[0]))
+angles = angles[0]
+
+covar = np.cov(np.transpose(angles))
 
 eigen, eigenvec = np.linalg.eigh(covar)
 
 
 theta = np.zeros(48)
 
-for i in range(10,48):
-    theta += eigenvec[i]*np.dot(eigenvec[i],angles[0][0])
+for i in range(48):
+    theta += eigenvec[i]*np.dot(eigenvec[i],angles[0])
     
 
 x,y = angle_and_skel.angle2skel(theta,np.mean(theta),1,48)
 
-x2,y2 = angle_and_skel.angle2skel(angles[0][0],np.mean(angles[0][0]),1,48)
+x2,y2 = angle_and_skel.angle2skel(angles[0],np.mean(angles[0]),1,48)
 
 sns.plt.plot(x,y)
 
 sns.plt.plot(x2,y2)
 
-#let's look at how good the last 4 angles are on average:
+#let's look at how good N eigenvectors are on average:
 stat_vec = np.zeros(21004)
 
 for i in range(21004):
     theta = np.zeros(48)
 
-    for j in range(15,48):
-        theta += eigenvec[j]*np.dot(eigenvec[j],angles[0][0])
+    for j in range(48):
+        theta += eigenvec[j]*np.dot(eigenvec[j],angles[j])
 
-    stat_vec[i] = spearmanr(theta,angles[0][i])[0]
+    stat_vec[i] = spearmanr(theta,angles[i])[0]
 
 
 #theta_ = np.multiply(theta,pos[:,0])
