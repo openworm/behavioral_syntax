@@ -1,5 +1,6 @@
-introduction
-==============
+************************
+Introduction
+************************
 
 1. The 'syntax approach' is an attempt to describe the locomotion of C. Elegans in terms of a vocabulary of 'worm shapes'. 90 distinct postures are sufficient to account for 82% of postural variance. 
 2. This enables the use of methods developed for other kinds of discrete data in bioinformatics and language processing to be harnessed for the study of behavior.
