@@ -9,9 +9,9 @@ Discretization:
 ==============
 
 1. Visualization of k template postures
-2. Analyse the effectiveness of these tools for phentoyping C. Elegans
-   behavior.
-3. Use effective tools for building phenotype classification algorithms.
+2. Show distance between postures using MDS
+3. R2 charts
+4. most/least common n-grams for each environment
 
 Comparison of environments:
 ==============
