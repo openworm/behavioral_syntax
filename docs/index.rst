@@ -13,6 +13,7 @@ Contents:
    
    introduction
    lab_reports
+   required_software
 
 
 
