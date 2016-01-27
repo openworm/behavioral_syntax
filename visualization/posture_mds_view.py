@@ -1,7 +1,8 @@
 import numpy as np
 
-import matplotlib
-matplotlib.use('Agg')
+#import matplotlib
+#matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 
 
@@ -62,8 +63,7 @@ def mds_view(file_path):
     for i in range(90):
         plt.annotate(str(i), xy = (pos[:,0][i],pos[:,1][i]-0.15),textcoords='offset points')
     
-    
-    
+
     #file location:
     gen = behavioral_syntax.lab_reports.__file__
     
