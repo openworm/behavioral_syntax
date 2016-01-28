@@ -8,5 +8,5 @@ b) You can get all this(and more) for free if you follow these installation inst
 
 
 2. Python programming references:
-a) assuming that you're not a python wizard here's a list of useful references: http://docs.python-guide.org/en/latest/intro/learning/
-b) if you want something a bit less dry, you can try this great set of economics lessons(using Python): http://quant-econ.net/py/index.html
+| a) assuming that you're not a python wizard here's a list of useful references: http://docs.python-guide.org/en/latest/intro/learning/
+| b) if you want something a bit less dry, you can try this great set of economics lessons(using Python): http://quant-econ.net/py/index.html
