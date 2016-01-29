@@ -1,9 +1,9 @@
 from scipy import io
-import behavioral_syntax
 from behavioral_syntax.utilities.angle_and_skel import MA2skel
 from behavioral_syntax.utilities.number_theory import largest_factors
 import numpy as np
 
+%matplotlib inline
 import matplotlib
 matplotlib.use('Agg')
 from matplotlib import pyplot as plt
@@ -47,10 +47,5 @@ def view_postures(postures_file):
         ax.axis('off')
         j+=1
         
-    #file location:
-    gen = behavioral_syntax.lab_reports.__file__
-    
-    image_1 = gen[:-11]+ 'figures/postures'
-
         
-    fig.savefig(image_1)
+    plt.show()

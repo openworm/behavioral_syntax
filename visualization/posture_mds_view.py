@@ -1,7 +1,7 @@
 import numpy as np
 
-#import matplotlib
-#matplotlib.use('Agg')
+import matplotlib
+matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
 
@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 #from bokeh.plotting import figure, output_file, show
 #from bokeh.models import Range1d
 
-import behavioral_syntax
+
 from scipy import io
 from sklearn import manifold
 from sklearn.metrics import euclidean_distances
@@ -65,10 +65,12 @@ def mds_view(file_path):
     
 
     #file location:
-    gen = behavioral_syntax.lab_reports.__file__
+    #gen = behavioral_syntax.lab_reports.__file__
     
-    image_2 = gen[:-11]+ 'figures/mds'
+    #image_2 = gen[:-11]+ 'figures/mds'
     
-    plt.savefig(image_2)
+    plt.show()
+    
+    #plt.savefig(image_2)
     
     
