@@ -8,8 +8,8 @@
 
 import numpy as np
 import os
-from scipy import io
-import h5py
+
+from behavioral_syntax.utilities.loading_data import loading_data
 
 directory = '/Users/cyrilrocke/Documents/c_elegans/data/'
 files = os.listdir(directory+'/test1/20_videos')
@@ -27,55 +27,35 @@ variances = []
 errors = []
 skeletons = []
 
-def get_features(files,directory,postures,start,finish):
+def get_features(directory,sampling_fraction):
     
-    for i in range(start,finish):
-        #fetch skeletons: 
-        if files[i].endswith('.mat'):
-            #get skeleton data:
-            f = h5py.File(directory+'test1/20_videos/'+files[i])
-            #getting the right cell array:
-            for i in ['worm','posture','skeleton']:
-                f = f.get(i)
-                
-            #getting the x and y coordinates:
-            X = np.array(f.get('x'))
-            Y = np.array(f.get('y'))
-                
-            indices = []
-            for j in range(len(X)):
-                if np.sum(np.isnan(X[j]))== 0:
-                    indices.append(j)
-                        
-            X = X[indices] 
-            Y = Y[indices]
-        
-            #get angles for the skeletons
-            angles, m_a = angle(X,Y)
-            X, Y = angle2skel(angles, m_a, 1)
+     angles = loading_data(directory, sampling_fraction)
+     
+     for i in range(len(angles)):
+         Angles = angles[i][0]
+
+       
+         #initialize Vars and posture_sequence:
+         Vars = np.zeros(Angles)
+         posture_sequence = ''
+         angle_err = np.zeros(len(Angles))
             
-            #initialize Vars and posture_sequence:
-            Vars = np.zeros(len(X))
-            posture_sequence = ''
-            angle_err = np.zeros(len(X))
+         for j in range(len(Angles)):
+             distances = [np.inf]*90
+             for k in range(90):
+                 distances[j] = np.linalg.norm(Angles[j][0]-postures[:,k])
+             val = min(distances)
+             angle_err[j] = val
+             ind = distances.index(val)
+             Vars[j] = np.corrcoef(Angles[j],postures[:,ind])[0][1]**2
+             posture_sequence = posture_sequence + ' ' + str(ind)
             
-            for i in range(len(X)):
-                distances = [np.inf]*90
-                for j in range(90):
-                    distances[j] = np.linalg.norm(angles[i]-postures[:,j])
-                val = min(distances)
-                angle_err[i] = val
-                ind = distances.index(val)
-                Vars[i] = np.corrcoef(angles[i],postures[:,ind])[0][1]**2
-                posture_sequence = posture_sequence + ' ' + str(ind)
-        
-        #collect features
-        variances.append(Vars)
-        all_postures.append(posture_sequence)
-        Angles.append(angles) 
-        mean_angles.append(m_a)
-        skeletons.append(np.vstack((X,Y)))
-        errors.append(angle_err)
+         #collect features
+         variances.append(Vars)
+         all_postures.append(posture_sequence)
+         mean_angles.append(m_a)
+         skeletons.append(np.vstack((X,Y)))
+         errors.append(angle_err)
         
         #save everything to the specified file path:
         np.save(directory+'/test1/features/skeletons'+str(finish),skeletons)

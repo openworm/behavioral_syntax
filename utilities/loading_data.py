@@ -43,7 +43,9 @@ def loading_data(directory,sampling_fraction):
                             expressed as a float
         
         ex. if sampling_fraction == 1 then you want all the files in the 
-            directory. """
+            directory. 
+            
+        output = angle_data(of type list)"""
     file_names = os.listdir(directory)
     files = [directory+file_names[i] for i in range(len(file_names)) if file_names[i].endswith('.mat')]
     
