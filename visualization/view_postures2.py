@@ -1,10 +1,15 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Jan 29 00:07:29 2016
+
+@author: aidanrocke
+"""
+
 from scipy import io
 from behavioral_syntax.utilities.angle_and_skel import MA2skel
 from behavioral_syntax.utilities.number_theory import largest_factors
 import numpy as np
 
-import matplotlib
-matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 
 plt.style.use('ggplot')

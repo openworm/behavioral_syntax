@@ -8,8 +8,6 @@ import matplotlib.pyplot as plt
 
 #from bokeh.plotting import figure, output_file, show
 #from bokeh.models import Range1d
-
-
 from scipy import io
 from sklearn import manifold
 from sklearn.metrics import euclidean_distances
