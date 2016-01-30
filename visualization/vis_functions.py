@@ -4,62 +4,29 @@ Created on Tue Sep  1 12:41:16 2015
 
 @author: macbook
 """
-from angle_and_skel import MA2skel
+from behavioral_syntax.utilities.angle_and_skel import MA2skel
 
 import matplotlib.pyplot as plt
-from number_theory import is_prime, largest_factors
-from math import sqrt
+from behavioral_syntax.utilities.number_theory import is_prime, largest_factors
 from scipy.stats import itemfreq
 import numpy as np
 from scipy import io
 #for bokeh charts:
+"""
 from bokeh.plotting import show, output_file
 from bokeh.charts import Bar
-
+"""
 #visualizing postures is probably one of the most important tasks:
-postures_mat = io.loadmat('/Users/cyrilrocke/behavioral_syntax/data/postures')
-postures = postures_mat.get('postures')
+postures = '/Users/cyrilrocke/Documents/c_elegans/data/postures'
+g = io.loadmat(postures)
+postures = g.get('postures')
 
 plt.style.use('ggplot')
 
-def N_postures(sequence,color,title,image_loc,image_name):
-    sequence = list(sequence)
-    mean_angles = np.zeros(90)
-    
-    for i in sequence:
-        mean_angles[i] = np.mean(postures[:,i])
-        
-    X,Y = MA2skel(postures.T,mean_angles,1)
-    
-    N = len(sequence)
-    if N>6 and is_prime(N) == 1:
-        n = round(sqrt(N))+1
-        fig, axes = plt.subplots(ncols=n, nrows=n)
-        fig.set_size_inches(n, n)
-    elif N<6:
-        fig, axes = plt.subplots(ncols=N, nrows=1)
-        fig.set_size_inches(N, round(N/2))
-    else:
-        rows,cols = largest_factors(N)
-        fig, axes = plt.subplots(ncols=cols, nrows=rows)
-        
-    fig.suptitle(title, fontsize=14, fontweight='bold')
-    
-    axes = axes.ravel()
-    j = 0
-    for j in range(len(sequence)):
-        axes[j].plot(X[sequence[j]],Y[sequence[j]],color=color,lw=5)
-        axes[j].set_title(str(sequence[j]),size='medium',weight='bold',color='steelblue',backgroundcolor=(1,  0.85490196,  0.7254902))
-        axes[j].axis('off')
-        j+=1
-    
-    #save to file only if that's what you actually want 
-    if isinstance(image_loc+image_name,str):
-        fig.savefig(image_loc+image_name+'.png',dpi=fig.dpi)
-        
 
+"""
 def bokeh_bars(liszt,name):
-    """this gives an interactive bar chart plot"""
+
     z = itemfreq(liszt)
     z = z[np.argsort(z[:,1])]
     data = {"y": list(z[:,1])}
@@ -71,14 +38,14 @@ def bokeh_bars(liszt,name):
     
     show(bar)
 
-plt.style.use('ggplot')
+plt.style.use('ggplot')"""
 
 def grid_plot(list,kind,image_loc,image_name):
     N = len(list)
     
     #we select an n*n subset of the multi_array of length N which for n>=16
     #is always greater than 99% of the members of the multi_array. 
-    n = round(sqrt(N))
+    n = round(np.sqrt(N))
     
 
     fig, axes = plt.subplots(ncols=n, nrows=n+1)
@@ -92,6 +59,8 @@ def grid_plot(list,kind,image_loc,image_name):
     
         j = 0
         for i in range(N):
+            if type(list[j]) == str:
+                list[j] = list[j].split(' ')
             z = itemfreq(list[j])
             z = z[np.argsort(z[:,1])]
             ax[i].plot(z[:,1],'o')
