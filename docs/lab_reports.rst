@@ -23,3 +23,9 @@ Comparison of environments:
 
 Bayesian Analysis:
 ==============
+
+1. Given that two different groups of worms crawled in similar environments we want 
+to know the probability that the worms are of the same species.
+
+2. Given that two groups of worms of the same species crawled in different environments
+we want to calculate the probability that their behaviors are actually different. 
