@@ -7,7 +7,7 @@ Created on Fri Jan 29 00:07:29 2016
 
 from scipy import io
 from behavioral_syntax.utilities.angle_and_skel import MA2skel
-from behavioral_syntax.utilities.number_theory import largest_factors
+from behavioral_syntax.utilities.numericalc import largest_factors
 import numpy as np
 
 from matplotlib import pyplot as plt

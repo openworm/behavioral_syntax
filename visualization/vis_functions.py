@@ -7,7 +7,7 @@ Created on Tue Sep  1 12:41:16 2015
 from behavioral_syntax.utilities.angle_and_skel import MA2skel
 
 import matplotlib.pyplot as plt
-from behavioral_syntax.utilities.number_theory import is_prime, largest_factors
+from behavioral_syntax.utilities.numbericalc import largest_factors
 from scipy.stats import itemfreq
 import numpy as np
 from scipy import io

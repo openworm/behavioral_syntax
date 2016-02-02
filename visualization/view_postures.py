@@ -1,6 +1,6 @@
 from scipy import io
 from behavioral_syntax.utilities.angle_and_skel import MA2skel
-from behavioral_syntax.utilities.number_theory import largest_factors
+from behavioral_syntax.utilities.numbericalc import largest_factors
 import numpy as np
 
 import matplotlib
