@@ -21,8 +21,11 @@ def sequence_filter(skeleton, angle_indices):
     else:
         return 0
 
-#get greatest common factors:
+
 def largest_factors(n):  
+    """compute the largest multiples of a number n that are nearly square.
+        This is useful for creating grids of plots. 
+    """
     L = [(x, n/x) for x in range(1, int(np.sqrt(n))+1) if n % x == 0]
     difference = [abs(np.diff(i))[0] for i in L]
     smallest_diff = min([abs(np.diff(i))[0] for i in L])

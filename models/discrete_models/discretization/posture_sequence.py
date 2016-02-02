@@ -16,17 +16,24 @@ all_postures = []
 
 
 def posture_seq(directory,postures,sampling_fraction):
-    #I may not always want to be limited to 90 postures. 
+    """posture_seq grabs samples locomotion files from a directory and 
+        converts them to strings of posture_sequences
+
+    Input:
+        directory = the directory containing locomotion files
+        postures = the mat file or numpy array of template postures
+        sampling_fraction = the fraction of files you want to sample
+
+    Output:    
+        all_postures = a list of posture_sequences(of type string)
+    """ 
     num_postures = len(postures)
     
-    angle_data, bad_data = loading_data(directory,sampling_fraction)
+    angle_data = loading_data(directory,sampling_fraction)[0]
     
     i = 0
     while i < len(angle_data):
         
-            
-        #I should probably add a test for frame sparsity as well. At present I'm 
-        #assuming that frame sparsity isn't an issue. 
         if len(angle_data[i][1]) > 1000:
             
             #get angles for the skeletons
