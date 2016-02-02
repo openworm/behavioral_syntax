@@ -54,17 +54,18 @@ def loading_data(directory,sampling_fraction):
         N = len(files)
         sample = np.random.choice(N, int(N*sampling_fraction),replace=False)
         files = [files[i] for i in sample]
-        
+    
+    #obtain skeleton matrices:
     skeletons = [get_skeletons(files[i]) for i in range(len(files))]
     
-
+    #derive angle vectors from skeleton matrices:
+    angle_data1 = [angle(skeletons[i]) for i in range(len(skeletons))]
     
-    angle_data = [angle(skeletons[i]) for i in range(len(skeletons))]
+    angle_data = [i for i in angle_data1 if i != 0]
     
-    #angleArray, meanAngles = angle(X,Y)
-    #return angleArray, meanAngles
+    bad_data = len(angle_data1)-len(angle_data)
     
-    return angle_data
+    return angle_data, bad_data
   
 '''
 #save data

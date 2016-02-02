@@ -1,5 +1,7 @@
 import numpy as np
 
+from behavioral_syntax.utilities.numericalc import sequence_filter
+
 #in this script is contained the angle function, the angle to skeleton function(angle2skel)
 #and the many angles to many skeletons function(MA2skel). 
 
@@ -28,63 +30,67 @@ def angle(val):
            meanAngles - the average angle that was subtracted for each frame
                         of the video."""
     
-    
     indices = [j for j in range(len(x)) if np.sum(np.isnan(x[j]))== 0]
     
-    x = x[indices]
-    y = y[indices]
+    if sequence_filter(val,indices) != 0:
     
-    [numFrames, lengthX] = np.shape(x)
-    
-    # initialize arrays
-    angleArray = np.zeros([numFrames, lengthX-1])
-    meanAngles = np.zeros([numFrames,1])
-    
-    
-    for i in range(numFrames):
-        # calculate the x and y differences
-        dX = np.diff(x[i], n=1, axis=0)
-        dY = np.diff(y[i], n=1, axis=0)
+        x = x[indices]
+        y = y[indices]
         
-        # calculate tangent angles.  atan2 uses angles from -pi to pi instead...
-        # of atan which uses the range -pi/2 to pi/2.
-        angles = np.arctan2(dY, dX)
-        #angleArray[i] = angles
+        [numFrames, lengthX] = np.shape(x)
         
-        # need to deal with cases where angle changes discontinuously from -pi
-        # to pi and pi to -pi.  In these cases, subtract 2pi and add 2pi
-        # respectively to all remaining points.  This effectively extends the
-        # range outside the -pi to pi range.  Everything is re-centred later
-        # when we subtract off the mean.
+        # initialize arrays
+        angleArray = np.zeros([numFrames, lengthX-1])
+        meanAngles = np.zeros([numFrames,1])
         
-        # find discontinuities larger than pi (skeleton cannot change direction
-        # more than pi from one segment to the next)
-        #1 to cancel diff
-        diffs = np.diff(angles, n=1, axis=0)
-        #z1 = diffs > 5
-        #z2 = diffs < -5
-        positiveJumps = np.array(get_true(diffs > 5))+1
-        negativeJumps = np.array(get_true(diffs < -5))+1 
         
-        # subtract 2pi from remainging data after positive jumps
-        if len(positiveJumps>0):
-            for j in positiveJumps:
-                angles[j:] = angles[j:] - 2*np.pi
+        for i in range(numFrames):
+            # calculate the x and y differences
+            dX = np.diff(x[i], n=1, axis=0)
+            dY = np.diff(y[i], n=1, axis=0)
+            
+            # calculate tangent angles.  atan2 uses angles from -pi to pi instead...
+            # of atan which uses the range -pi/2 to pi/2.
+            angles = np.arctan2(dY, dX)
+            #angleArray[i] = angles
+            
+            # need to deal with cases where angle changes discontinuously from -pi
+            # to pi and pi to -pi.  In these cases, subtract 2pi and add 2pi
+            # respectively to all remaining points.  This effectively extends the
+            # range outside the -pi to pi range.  Everything is re-centred later
+            # when we subtract off the mean.
+            
+            # find discontinuities larger than pi (skeleton cannot change direction
+            # more than pi from one segment to the next)
+            #1 to cancel diff
+            diffs = np.diff(angles, n=1, axis=0)
+            #z1 = diffs > 5
+            #z2 = diffs < -5
+            positiveJumps = np.array(get_true(diffs > 5))+1
+            negativeJumps = np.array(get_true(diffs < -5))+1 
+            
+            # subtract 2pi from remainging data after positive jumps
+            if len(positiveJumps>0):
+                for j in positiveJumps:
+                    angles[j:] = angles[j:] - 2*np.pi
+            
+            # add 2pi to remaining data after negative jumps
+            if len(negativeJumps>0):
+                for j in negativeJumps:
+                    angles[j:] = angles[j:] + 2*np.pi
+            
+            # rotate skeleton angles so that mean orientation is zero
+            
+            meanAngles[i] = np.mean(angles)
+            angles -= meanAngles[i]
+            
+            # append to angle array
+            angleArray[i] = angles
+            
+        return angleArray, meanAngles
         
-        # add 2pi to remaining data after negative jumps
-        if len(negativeJumps>0):
-            for j in negativeJumps:
-                angles[j:] = angles[j:] + 2*np.pi
-        
-        # rotate skeleton angles so that mean orientation is zero
-        
-        meanAngles[i] = np.mean(angles)
-        angles -= meanAngles[i]
-        
-        # append to angle array
-        angleArray[i] = angles
-        
-    return angleArray, meanAngles
+    else:
+        return 0
 
 def angle2skel(angle,mean_angle,arclength,numAngles):
     """Input:
