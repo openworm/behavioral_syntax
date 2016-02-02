@@ -16,7 +16,7 @@ def sequence_filter(skeleton, angle_indices):
         input: sequence of type list
         output: """
         
-    if max(angle_indices)/len(skeleton) > 0.6:
+    if len(angle_indices)/len(skeleton) > 0.7:
         return angle_indices
     else:
         return 0

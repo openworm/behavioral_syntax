@@ -5,8 +5,6 @@ Created on Fri Jan 29 18:38:57 2016
 @author: aidanrocke
 """
 from behavioral_syntax.utilities.get_features import get_features
-
-from behavioral_syntax.utilities.loading_data import loading_data
 from scipy import io
 
 import numpy as np
@@ -57,5 +55,3 @@ image_loc = '/Users/cyrilrocke/Documents/c_elegans/data/'
 
 if isinstance(image_loc+image_name,str):
         fig.savefig(image_loc+image_name+'.png',dpi=fig.dpi)
-
-#angles = loading_data(data, 0.2)

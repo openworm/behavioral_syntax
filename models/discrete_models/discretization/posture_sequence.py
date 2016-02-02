@@ -19,7 +19,7 @@ def posture_seq(directory,postures,sampling_fraction):
     #I may not always want to be limited to 90 postures. 
     num_postures = len(postures)
     
-    angle_data = loading_data(directory,sampling_fraction)
+    angle_data, bad_data = loading_data(directory,sampling_fraction)
     
     i = 0
     while i < len(angle_data):

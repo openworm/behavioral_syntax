@@ -35,7 +35,7 @@ def get_features(directory,postures,sampling_fraction,output):
             output = the actual output you want. 1 if you want all outputs.
                     2 if you want just the postures
     """
-    angles = loading_data(directory, sampling_fraction)
+    angles, bad_data = loading_data(directory, sampling_fraction)
     
     for i in range(len(angles)):
          Angles = angles[i][0]

@@ -32,7 +32,7 @@ def angle(val):
     
     indices = [j for j in range(len(x)) if np.sum(np.isnan(x[j]))== 0]
     
-    if sequence_filter(val,indices) != 0:
+    if sequence_filter(x,indices) != 0:
     
         x = x[indices]
         y = y[indices]
