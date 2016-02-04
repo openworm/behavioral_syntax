@@ -4,7 +4,8 @@ Introduction:
 
 1. The 'syntax approach' is an attempt to describe the locomotion of C. Elegans in terms of a vocabulary of 'worm shapes'. 90 distinct postures are sufficient to account for 82% of postural variance. 
 2. This enables the use of methods developed for other kinds of discrete data in bioinformatics and language processing to be harnessed for the study of behavior.
-3. It must be noted however that the sequence of symbols we're analyzing are the abstraction of multiple data streams(temperature, pressure, chemical gradients, hunger, fatigue)...and so we have the same dilemma a lot of NLP researchers have. 
+3. The tools contained in the behavioral_syntax module are designed for desktop usage and it's assumed that the data will be stored using a file system, not a database. 
+
 
 road map:
 ==============
