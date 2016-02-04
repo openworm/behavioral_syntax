@@ -10,7 +10,7 @@ plt.style.use('ggplot')
 
 #postures_file = '/Users/cyrilrocke/behavioral_syntax/data/postures'
 
-def view_postures(order,image_loc,image_name,postures,annotation,title):
+def view_postures(order,image_loc,image_name,postures,annotation):
     """this function outputs a grid of postures with some annotation as
         desired.
         
@@ -23,7 +23,6 @@ def view_postures(order,image_loc,image_name,postures,annotation,title):
         
         Output:
             the image will be saved as desired
-    
     """
     
     N = max(np.shape(postures))
