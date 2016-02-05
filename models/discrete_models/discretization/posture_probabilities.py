@@ -4,15 +4,10 @@ Created on Wed Nov 18 20:40:43 2015
 
 @author: aidanrocke
 """
-#an assortment of functions for evaluating the probability of a posture
-#at a particular time. 
 
-#we try to get the parameters of the best fitting weibull distribution for
-#each posture. 
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-
 
 
 def posture_probability(image_loc,image_name,sequence,window_fraction):
@@ -59,8 +54,14 @@ def posture_probability(image_loc,image_name,sequence,window_fraction):
 
 
 
-    
-        
+image_loc = '/Users/cyrilrocke/Documents/c_elegans/data/'
+image_name = 'heatmap'
+window_fraction = .20
+
+if __name__=='__main__':
+    from timeit import Timer
+    t = Timer(lambda: posture_probability(image_loc,image_name,first,window_fraction))
+    print(t.timeit(number=1))
     
 
 
