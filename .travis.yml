@@ -38,7 +38,7 @@ install:
   - python --version
     
 script:
-  - py.test 
+  # - py.test  # Not sure what this means; @AidanRocke maybe delete this line
   - pwd
   - nosetests --nocapture
 
