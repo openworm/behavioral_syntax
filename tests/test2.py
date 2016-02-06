@@ -5,7 +5,7 @@ import sys
 import numpy as np
 
 sys.path.append('../..')
-from behavioral_syntax.discrete_models.nlp_methods.compression import time_warp as tw
+from behavioral_syntax.models.discrete_models.nlp_methods.compression import time_warp as tw
 from behavioral_syntax.utilities.metrics import dynamic_time_warp as dtw
 
 A = np.array([[ 0.7696172 ,  0.78793319,  0.28336053],
