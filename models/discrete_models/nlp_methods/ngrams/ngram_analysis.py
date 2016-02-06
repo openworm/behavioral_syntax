@@ -7,22 +7,27 @@ Created on Wed Sep  2 23:47:50 2015
 #model will result in a lot of sequences that are 'ungrammatical'. 
 
 #from behavioral_syntax.plotting.vis_functions import grid_plot
+from behavioral_syntax.utilities.string_conversion import plist_to_pstr  
 from scipy.stats import itemfreq
 import numpy as np
-import random
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
+#import random
 
 #all_postures = np.load('/Users/macbook/Documents/c_elegans/all_postures.npy')
 
 def n_grams(posture_seq, n):
     """ 
     Input:
-      posture_seq - a numpy array to be compressed
-      n           - the n in n-grams (also the number of columns in output nGrams)
+      posture_seq: a list of posture sequences
+      n:            the n in n-grams (also the number of columns in output nGrams)
      
       Output
-        nGrams  - a len(dataVec)-(n+1) by n array containing all the n-grams in dataVec  
-        nGram_seq  - a len(dataVec)-(n+1) by n array containing all the n-grams in dataVec
-        occurrences - the number of times each unique nGram occurs""" 
+        nGrams: a len(dataVec)-(n+1) by n array containing all the n-grams in dataVec  
+        nGram_seq: a len(dataVec)-(n+1) by n array containing all the n-grams in dataVec
+        occurrences: the number of times each unique nGram occurs""" 
+    
+    posture_seq = plist_to_pstr(posture_seq)
         
     nGram_seq = []   
 
@@ -50,7 +55,13 @@ def nGram2traj(postures, nGrams):
       NGRAM2TRAJ converts a matrix of n-grams into a corresponding matrix of
       angle trajectories using the input postures.
      
-        nGrams  - a len(dataVec)-(n+1) by n list containing all the n-grams in dataVec """ 
+     Input:
+         nGrams: a len(dataVec)-(n+1) by n list containing all the n-grams in dataVec
+         postures: an array of template postures that is used as a dictionary
+         
+    Output:
+        angle_trajectories: the trajectory of angles
+        """ 
     
     
     n, m = len(nGrams), len(nGrams[0].split(' '))
@@ -66,9 +77,9 @@ def nGram2traj(postures, nGrams):
     
 
 
-def nGramAccumulateStep(nGram_seq, stepSize):
+def ngram_discovery(nGram_seq, stepSize):
     """
-         NGRAMACCUMULATENUMERICAL Works through the input matrix of n-grams in
+         ngram_discovery Works through the input matrix of n-grams in
           chunks to determine growth of number of unique sequences with growing
           number of observed n-grams.  It can be much faster that 
           nGramAccumulateNumerical if the step size is large.
@@ -104,7 +115,7 @@ def cumulative():
     cumulative = []
     
     for i in range(N):
-        trigram = ngrams(all_postures[0],3)
+        trigram = n_grams(all_postures[0],3)
         
         #looking at the distribution of trigram frequency:
         dist = itemfreq(list(trigram.values()))

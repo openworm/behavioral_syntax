@@ -43,7 +43,7 @@ def get_features(directory,postures,sampling_fraction,output):
        
          #initialize Vars and posture_sequence:
          Vars = np.zeros(len(Angles))
-         posture_sequence = ''
+         posture_sequence = []
          angle_err = np.zeros(len(Angles))
          m_a = np.zeros(len(Angles))
             
@@ -56,7 +56,7 @@ def get_features(directory,postures,sampling_fraction,output):
              angle_err[j] = val
              ind = distances.index(val)
              Vars[j] = np.corrcoef(Angles[j],postures[:,ind])[0][1]**2
-             posture_sequence = posture_sequence + ' ' + str(ind)
+             posture_sequence.append(ind)
              
     
             

@@ -4,7 +4,6 @@ Created on Fri Jan 29 18:38:57 2016
 
 @author: aidanrocke
 """
-from behavioral_syntax.utilities.get_features import get_features
 from behavioral_syntax.visualization.view_postures import view_postures
 from scipy import io
 
@@ -22,7 +21,7 @@ postures = g.get('postures')
 
 data = '/Users/cyrilrocke/Documents/c_elegans/data/chemotaxis/'
 
-def posture_distributions(image_loc, image_name,data, postures,sample_ratio,get_features_param=2):
+def posture_distributions(image_loc, image_name,data, postures,pos_seq):
     """we want to see the fractional contribution of each posture to the total
     posture sequence and see whether we observe anything interesting. 
     
@@ -30,17 +29,12 @@ def posture_distributions(image_loc, image_name,data, postures,sample_ratio,get_
         image_loc: the location where you want to save the output images
         data: the directory containing the files you are interested in
         postures: the template postures that are in use
-        sample_ratio: the fraction of the data you want to sample
-        gf_param: the get_features_parameter which defines what type of data 
-                you want. The default is 2, as this gives you posture sequences.
     
     Outputs:
         frequency distribution image: frequency distributions for each posture
         posture probability image: order of most likely postures from most to 
         least likely
     """
-
-    pos_seq = get_features(data,postures,sample_ratio,get_features_param)
     
     N = len(pos_seq)
     distribution = np.zeros((N,90))    
@@ -53,9 +47,7 @@ def posture_distributions(image_loc, image_name,data, postures,sample_ratio,get_
     fig.suptitle(image_name,fontsize=40,weight='bold')
     
     for i in range(N):
-        alpha1 = pos_seq[i].split(' ')
-        alpha2 = list(map(int,[i for i in alpha1 if i != '']))
-        z = itemfreq(alpha2)
+        z = itemfreq(pos_seq[i])
         
         set1 = list(z[:,0])
         
@@ -84,6 +76,7 @@ def posture_distributions(image_loc, image_name,data, postures,sample_ratio,get_
         ax[k].bar(range(N),distribution[:,k])
         ax[k].set_title(str(k),size='medium',weight='bold',color='steelblue',backgroundcolor=(1,  0.85490196,  0.7254902))
     
+    fig.show()
     
     if isinstance(image_loc+image_name,str):
             fig.savefig(image_loc+image_name+'.png',dpi=fig.dpi)
