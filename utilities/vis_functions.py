@@ -4,10 +4,10 @@ Created on Tue Sep  1 12:41:16 2015
 
 @author: macbook
 """
-from behavioral_syntax.utilities.angle_and_skel import MA2skel
+#from behavioral_syntax.utilities.angle_and_skel import MA2skel
 
 import matplotlib.pyplot as plt
-from behavioral_syntax.utilities.numbericalc import largest_factors
+#from behavioral_syntax.utilities.numericalc import largest_factors
 from scipy.stats import itemfreq
 import numpy as np
 from scipy import io
