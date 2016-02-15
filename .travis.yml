@@ -11,7 +11,7 @@ notifications:
   email: false
 
 before_install:
-  - sudo: false  
+  #- sudo: false  
   - pip install pytest pytest-cov
   - pip install nose
   - |
