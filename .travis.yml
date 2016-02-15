@@ -11,7 +11,7 @@ notifications:
   email: false
 
 before_install:
-  #- sudo: false  ...this is supposed to allow travis to run the build on new 'containers'
+  - sudo: false  
   - pip install pytest pytest-cov
   - pip install nose
   - |
