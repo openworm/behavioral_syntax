@@ -9,6 +9,8 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+from skimage.measure import structural_similarity as ssim
+
 
 def posture_probability(image_loc,image_name,sequence,window_fraction):
     """a function that is used to plot the probability of a posture after
@@ -50,6 +52,10 @@ def posture_probability(image_loc,image_name,sequence,window_fraction):
     
     #save the figure:
     plt.savefig(image_loc+image_name+'.png')
+    
+    return matrix
+    
+#apply structural similarity measure to compare heat maps: 
     
 
 
