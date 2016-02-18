@@ -81,8 +81,3 @@ def rules(sequence):
         df = pd.DataFrame(modified,index = df.index)
             
     return sequence, output, df
-    
-
-    
-            
- 
