@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/AidanRocke/behavioral_syntax.svg?branch=master)](https://travis-ci.org/AidanRocke/behavioral_syntax)
+[![Build Status](https://travis-ci.org/openworm/behavioral_syntax.svg?branch=master)](https://travis-ci.org/openworm/behavioral_syntax)
 
-[![Coverage Status](https://coveralls.io/repos/AidanRocke/behavioral_syntax/badge.svg?branch=master&service=github)](https://coveralls.io/github/AidanRocke/behavioral_syntax?branch=master)
+[![Coverage Status](https://coveralls.io/repos/openworm/behavioral_syntax/badge.svg?branch=master&service=github)](https://coveralls.io/github/openworm/behavioral_syntax?branch=master)
 
 #briefly:
 1. This is the Python implementation of Andre Brown's behavioral syntax code: https://github.com/aexbrown/Behavioural_Syntax
