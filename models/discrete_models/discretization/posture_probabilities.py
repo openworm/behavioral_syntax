@@ -17,6 +17,8 @@ def posture_probability(image_loc,image_name,sequence,window_fraction):
     x mins have passed in a given environment. 
     
     INPUTS:
+        image_loc: the location where you would like to save the document.
+        image_name: the name of the plot that is being generated
         sequence: the posture sequence list
         window_fraction:  the fraction that determines the size of each interval
     
@@ -66,10 +68,24 @@ window_fraction = .20
 
 if __name__=='__main__':
     from timeit import Timer
-    t = Timer(lambda: posture_probability(image_loc,image_name,first,window_fraction))
+    t = Timer(lambda: posture_probability(image_loc,image_name,sequence,window_fraction))
     print(t.timeit(number=1))
     
+vec = np.zeros(90)
+    
+for i in range(90):
+    vec[i] = np.corrcoef(mat1[i],mat4[i])[1][0]
+    
+[i for i in range(90) if vec[i]>0.5]
 
+#mat1 vs mat2
+#[9, 18, 39, 64, 68, 73, 83]
+
+#mat1 vs mat3
+#87
+
+#mat1 vs mat4:
+#37
 
     
     
