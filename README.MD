@@ -1,12 +1,14 @@
 [![Build Status](https://travis-ci.org/openworm/behavioral_syntax.svg?branch=master)](https://travis-ci.org/openworm/behavioral_syntax)
 
-[![Coverage Status](https://coveralls.io/repos/openworm/behavioral_syntax/badge.svg?branch=master&service=github)](https://coveralls.io/github/openworm/behavioral_syntax?branch=master)
+[![Build Status](https://travis-ci.org/AidanRocke/behavioral_syntax.svg?branch=master)](https://travis-ci.org/AidanRocke/behavioral_syntax)
+
+[![Coverage Status](https://coveralls.io/repos/AidanRocke/behavioral_syntax/badge.svg?branch=master&service=github)](https://coveralls.io/github/AidanRocke/behavioral_syntax?branch=master)
 
 #briefly:
 1. This is the Python implementation of Andre Brown's behavioral syntax code: https://github.com/aexbrown/Behavioural_Syntax
 2. But, the ultimate goal of this project is to define the benefits as well as limitations of the 'behavioral syntax' approach. 
-3. For more information please consult the wiki.
-4. continous_models are included to compare with the findings of the discrete approach. 
+3. continous_models are included to compare with the findings of the discrete approach. 
+4. For more information, please check the docs: http://behavioral-syntax.readthedocs.org/en/latest/
 
 
 ### Main functions:
@@ -24,6 +26,14 @@ adjacent duplicates. i.e. {3,4,4,5,75,75,6,6,6} = {3,45,75,6}
 5. sklearn
 6. scipy
 7. matplotlib
+8. seaborn
+9. bokeh
+
+##### Example of a template with 90 postures extracted using Kmeans++:
+![hr] (https://raw.githubusercontent.com/AidanRocke/behavioral_syntax/master/data/90_postures.png)
+
+##### Visualizing the tangent angle distance between postures:
+![hr] (https://github.com/AidanRocke/behavioral_syntax/blob/master/data/bokeh_postures_mds.png)
 8. seaborn
 9. bokeh
 
