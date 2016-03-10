@@ -5,11 +5,34 @@ Created on Wed Nov 18 20:40:43 2015
 @author: aidanrocke
 """
 
+#looking at similarity of heatmaps is uninteresting unless
+#there's a particular stimulus that is expected to generate
+#a similar response. 
+
+#this file should output a statistical test for similar reactions...
+
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 from skimage.measure import structural_similarity as ssim
+
+
+vec = np.zeros(90)
+    
+for i in range(90):
+    vec[i] = np.corrcoef(mat1[i],mat4[i])[1][0]
+    
+[i for i in range(90) if vec[i]>0.5]
+
+#mat1 vs mat2
+#[9, 18, 39, 64, 68, 73, 83]
+
+#mat1 vs mat3
+#87
+
+#mat1 vs mat4:
+#37
 
 
 def posture_probability(image_loc,image_name,sequence,window_fraction):
@@ -71,21 +94,6 @@ if __name__=='__main__':
     t = Timer(lambda: posture_probability(image_loc,image_name,sequence,window_fraction))
     print(t.timeit(number=1))
     
-vec = np.zeros(90)
-    
-for i in range(90):
-    vec[i] = np.corrcoef(mat1[i],mat4[i])[1][0]
-    
-[i for i in range(90) if vec[i]>0.5]
-
-#mat1 vs mat2
-#[9, 18, 39, 64, 68, 73, 83]
-
-#mat1 vs mat3
-#87
-
-#mat1 vs mat4:
-#37
 
     
     
