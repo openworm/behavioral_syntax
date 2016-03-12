@@ -5,10 +5,9 @@
 [![Coverage Status](https://coveralls.io/repos/AidanRocke/behavioral_syntax/badge.svg?branch=master&service=github)](https://coveralls.io/github/AidanRocke/behavioral_syntax?branch=master)
 
 #briefly:
-1. This is the Python implementation of Andre Brown's behavioral syntax code: https://github.com/aexbrown/Behavioural_Syntax
-2. But, the ultimate goal of this project is to define the benefits as well as limitations of the 'behavioral syntax' approach. 
-3. continous_models are included to compare with the findings of the discrete approach. 
-4. For more information, please check the docs: http://behavioral-syntax.readthedocs.org/en/latest/
+1. This is a behavioral turing test derived from ideas in Andre Brown's behavioral syntax code: https://github.com/aexbrown/Behavioural_Syntax and other sources.
+2. The comparisons are based on the movement of individual worms in petri dishes in three different environments. Off food, on food, and with chemical gradients. 
+3. For more information, please check the docs: http://behavioral-syntax.readthedocs.org/en/latest/
 
 
 ### Main functions:
