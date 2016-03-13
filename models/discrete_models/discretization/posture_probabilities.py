@@ -7,13 +7,16 @@ Created on Wed Nov 18 20:40:43 2015
 
 #looking at similarity of heatmaps is uninteresting unless
 #there's a particular stimulus that is expected to generate
-#a similar response. 
+#a similar deterministic response over short time scales. 
 
 #this file should output a statistical test for similar reactions...
+
+#it would be great if the computation in compare_matrices was parallelized.
 
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+import os
 
 from skimage.measure import structural_similarity as ssim
 
@@ -35,7 +38,7 @@ for i in range(90):
 #37
 
 
-def posture_probability(image_loc,image_name,sequence,window_fraction):
+def p_matrix(sequence):
     """a function that is used to plot the probability of a posture after
     x mins have passed in a given environment. 
     
@@ -51,38 +54,56 @@ def posture_probability(image_loc,image_name,sequence,window_fraction):
         histogram_matrix: an len(sequence) by num_postures matrix numpyarray"""
     N = len(sequence)   
     
-    window = int(window_fraction*N)
-    
     #initialize matrix:
-    matrix = np.zeros((90,N-window+1))
+    matrix = np.zeros((90,N))
     
     #checking the probability that a posture occurs at a particular time. 
     for i in range(90):
-        matrix[i] = [sequence[j:j+window].count(i) for j in range(N-window+1)]    
+        matrix[i] = [sequence[j:j+1].count(i) for j in range(N)]    
     
-    for i in range(N-window+1):
-        if sum(matrix[:,i])>0:
-            matrix[:,i] = matrix[:,i]/sum(matrix[:,i])
-            
-        #plt.figure()
-        #plt.hist(matrix[i])
-        
+    #return matrix
+    return matrix
+    
+#apply structural similarity measure to compare heat maps: 
+def compare_matrices(group_A_path,group_B_path, image_loc,image_name):
+    """do a hypothesis test to see whether there is a significant difference
+       between the behaviors demonstrated by the word in seq_folder_a and
+       worms in seq_folder_b
+       
+       Input:
+           group_A: this is the numpy file of all posture sequences for a group
+                    of worms that responded to a stimulus
+           group_B: this is the numpy file of all posture sequences for a group
+                    of worms(different from A) that responded to a stimulus
+       
+       we assume that all the files in """
+    
+    #load data:
+    group_A = np.load(group_A_path)
+    group_B = np.load(group_B_path)
+    
+    n_A = min([len(group_A[i]) for i in range(len(group_A))])
+    n_B = min([len(group_B[i]) for i in range(len(group_B))])
+    
+    N = min(n_A, n_B)
+    
+    matrices_A = [p_matrix(group_A[i][0:N]) for i in range(len(group_A))]
+    matrices_B = [p_matrix(group_B[i][0:N]) for i in range(len(group_B))]
+    
+    
+    #plot the average number of occurrences for each matrix:
     ax = plt.axes()
     
     ax.set_title(image_name)    
         
     sns.heatmap(matrix,xticklabels=window,ax=ax)
     
-    #return matrix
-    
+     
     #save the figure:
-    plt.savefig(image_loc+image_name+'.png')
-    
-    return matrix
-    
-#apply structural similarity measure to compare heat maps: 
-    
+    #plt.savefig(image_loc+image_name+'.png')
 
+
+    #perform hierarchical clustering on the matrices:
 
 
 image_loc = '/Users/cyrilrocke/Documents/c_elegans/data/'

@@ -10,9 +10,13 @@ import os
 #figure out what type of analysis the user wants to do:
 
 """Give the number of the type of analysis you want to do:
+    A) testing worm behavior within uniform environments
         1) one worm species in one environment
         2) one species in several environments
         3) different species in similar environments
+    
+    B) testing for deterministic worm responses to particular stimuli:
+        1) 
         
         ex. 2 if you want option 2"""
 
