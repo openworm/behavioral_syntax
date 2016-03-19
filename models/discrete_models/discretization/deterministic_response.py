@@ -39,6 +39,51 @@ for i in range(90):
 #mat1 vs mat4:
 #37
 
+#what follows is just pseudo-code.
+
+# 1. get a number(N) randomly chosen sequences of worm skeletons from worm_A_response
+#    and worm_B_response to the same stimulus. 
+# 2. compute average Dynamic Time Warping distance within-group for both
+#    worm_A_response and worm_B_response
+# 3. If this average distance for either group is small then produce a heat-map
+#    for three randomly selected skeleton sequences and their average.
+
+# This will require loading_data.py, get_features.py,metrics/dynamic_time_warp.py
+
+import loading_data
+import get_features
+import dynamic_time_warp
+
+skel_A, skel_B = loading_data(group_A), loading_data(group_B) 
+
+#we suppose that 10 is a sufficiently large sample size:
+skel_A, skel_B = sample(skel_A,10), sample(skel_B,10)
+
+dist_A, dist_B = np.zeros(45), np.zeros(45)
+
+k = 0
+for i in range(10):
+    for j in range(i+1,10):
+        k+=1
+        dist_A[k] = DTW(skel_A[i],skel_A[j])
+        
+k = 0
+for i in range(10):
+    for j in range(i+1,10):
+        k+=1
+        dist_A[k] = DTW(skel_B[i],skel_B[j])
+    
+distances = np.zeros(100)
+
+for i in range(10):
+    p = skel_A[i]
+    for j in range(10):
+        distances[i,j] = DTW(p,skel_B[j])
+
+
+
+# If the distance is small 
+
 
 def p_matrix(sequence):
     """a function that is used to plot the probability of a posture after
