@@ -29,10 +29,10 @@ adjacent duplicates. i.e. {3,4,4,5,75,75,6,6,6} = {3,45,75,6}
 9. bokeh
 
 ##### Example of a template with 90 postures extracted using Kmeans++:
-![hr] (https://raw.githubusercontent.com/AidanRocke/behavioral_syntax/master/data/90_postures.png)
+![hr] (https://raw.githubusercontent.com/openworm/behavioral_syntax/master/lab_reports/figures/postures.png)
 
 ##### Visualizing the tangent angle distance between postures:
-![hr] (https://github.com/AidanRocke/behavioral_syntax/blob/master/data/bokeh_postures_mds.png)
+![hr] (https://raw.githubusercontent.com/openworm/behavioral_syntax/master/lab_reports/figures/mds.png)
 8. seaborn
 9. bokeh
 
