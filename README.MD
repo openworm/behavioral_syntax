@@ -33,9 +33,3 @@ adjacent duplicates. i.e. {3,4,4,5,75,75,6,6,6} = {3,45,75,6}
 
 ##### Visualizing the tangent angle distance between postures:
 ![hr] (https://raw.githubusercontent.com/openworm/behavioral_syntax/master/lab_reports/figures/mds.png)
-
-##### Example of a template with 90 postures extracted using Kmeans++:
-![hr] (https://raw.githubusercontent.com/AidanRocke/behavioral_syntax/master/data/90_postures.png)
-
-##### Visualizing the tangent angle distance between postures:
-![hr] (https://github.com/AidanRocke/behavioral_syntax/blob/master/data/bokeh_postures_mds.png)
